@@ -108,11 +108,13 @@ public class clock // this is Clock class
  //http://stackoverflow.com/questions/20331163/how-to-format-joda-time-datetime-to-only-mm-dd-yyyy
  private void printClock() throws InterruptedException, IOException 
  { 
-  // Convert hh to 24 hour equiv; used to calculate the seconds of the day
+  // Convert hh to 24 hour equiv which will then be used to calculate the seconds of the day from midnight
   int HH = hh;
 
-  if(AM_or_PM.equals("PM"))
-   HH += 12;
+  if(AM_or_PM.equals("PM") && HH != 12)//if PM add 12 hours except if it is 12 PM
+  { HH += 12; }
+  else if(AM_or_PM.equals("AM") && HH == 12)//if 12 AM, it is 0 hours from midnight
+  { HH = 0; }
   
   // Find the difference in seconds between user specified time and actual time
   int timeDifference = HH * 3600 + mm * 60 + ss - DateTime.now().getSecondOfDay();
