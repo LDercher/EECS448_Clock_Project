@@ -13,7 +13,7 @@ import org.joda.time.format.PeriodFormatterBuilder;
 
 //How to import timing library taken from: http://stackoverflow.com/questions/12105164/java-joda-time-download-and-install-step-by-step
 
-public class clock
+public class clock // this is Clock class
 {
  //constructor method
  public clock()
