@@ -111,9 +111,8 @@ public class clock
   // Convert hh to 24 hour equiv; used to calculate the seconds of the day
   int HH = hh;
 
-  //commented out this code to place it into the menu. can add back
-  //if(AM_or_PM.equals("PM") && militaryTime == true)
-   //HH += 12;
+  if(AM_or_PM.equals("PM"))
+   HH += 12;
   
   // Find the difference in seconds between user specified time and actual time
   int timeDifference = HH * 3600 + mm * 60 + ss - DateTime.now().getSecondOfDay();
