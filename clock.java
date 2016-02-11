@@ -182,14 +182,14 @@ public class clock // this is Clock class
 			 //jero test push
 			 if (militaryTime == true)
 			 {
-				 Systme.out.println("Please insert in military time(24 hour)!");
+				 System.out.println("Please insert in military time(24 hour)!");
 				 System.out.print("Insert hh:");
 				  while(hh < 0 || hh > 23)
 				  {
 					  hh = input.nextInt();
 					  if(hh < 0 || hh > 23)
 					  {
-						  System.out.print("hh must be between 1-24, try again:");
+						  System.out.print("hh must be between 0-23, try again:");
 					  }
 				  }
 				  System.out.print("Insert mm:");
@@ -202,6 +202,31 @@ public class clock // this is Clock class
 					  }
 				  }
 				  ss = 0;
+			 }
+			 else
+			 {
+				 System.out.println("Please insert in non-military time(12 hour)!");
+				 System.out.print("Insert hh:");
+				 while(hh < 1 || hh > 12)
+				 {
+					 hh = input.nextInt();
+					 if(hh < 1 || hh > 12)
+					 {
+						 System.out.print("hh must be between 1-12, try again:");
+					 }
+				 }
+				 System.out.print("Insert mm:");
+				 while(mm < 0 || mm > 59)
+				 {
+					 mm = input.nextInt();
+					 if(mm < 0 || mm > 59)
+					 {
+						 System.out.print("mm must be between 0-59, try again:");
+					 }
+				 }
+				 ss = 0;
+				 System.out.print("Insert AM or PM:");
+				 AM_or_PM = input.nextLine(); 
 			 }
 		 }
 		 else
