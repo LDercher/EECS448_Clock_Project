@@ -180,6 +180,29 @@ public class clock // this is Clock class
 			 //input();
 			 //changes time
 			 //jero test push
+			 if (militaryTime == true)
+			 {
+				 Systme.out.println("Please insert in military time(24 hour)!");
+				 System.out.print("Insert hh:");
+				  while(hh < 0 || hh > 23)
+				  {
+					  hh = input.nextInt();
+					  if(hh < 0 || hh > 23)
+					  {
+						  System.out.print("hh must be between 1-24, try again:");
+					  }
+				  }
+				  System.out.print("Insert mm:");
+				  while(mm < 0 || mm > 59)
+				  {
+					  mm = input.nextInt();
+					  if(mm < 0 || mm > 59)
+					  {
+						  System.out.print("mm must be between 0-59, try again:");
+					  }
+				  }
+				  ss = 0;
+			 }
 		 }
 		 else
 		 {
