@@ -179,6 +179,7 @@ public class clock // this is Clock class
 		 {
 			 //input();
 			 //changes time
+			 //jero test push
 		 }
 		 else
 		 {
