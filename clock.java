@@ -21,8 +21,9 @@ public class clock // this is Clock class
   hh = -1; 
   mm = -1; 
   ss = -1; 
-  AM_or_PM = null;
+  AM_or_PM = "AM";
   input();
+  timeString = "";
   
   try {
    printClock();
@@ -42,6 +43,32 @@ public class clock // this is Clock class
  int ss;
  String AM_or_PM;
  boolean militaryTime = false;
+ String timeString;
+ boolean readyFlag = false;
+ int timeDifference;
+ 
+ public String getTime()
+ {
+	 return timeString;
+ }
+ 
+ public void setTime()
+ {
+	 DateTimeFormatter dtf = DateTimeFormat.forPattern("mm/dd/yyyy hh:mm:ss a");
+	// Parsing the date
+	   DateTime jodatime = dtf.parseDateTime(dtf.print(DateTime.now().plusMillis(timeDifference)));
+	   // Format for output
+	   DateTimeFormatter dtfOut = DateTimeFormat.forPattern("hh:mm:ss a");
+	   // Printing the time
+	   //System.out.println(dtfOut.print(jodatime));
+	   timeString = dtfOut.print(jodatime);
+	   //Thread.sleep(700); //This line is put in to prevent the terminal from getting spammed.
+ }
+ 
+ public boolean getReadyFlag()
+ {
+	 return readyFlag;
+ }
  
  //This method will take the user specified input for hh,mm,ss,AM.
  //I assume this method is only temporary and will be changed as we employ a GUI.
@@ -93,6 +120,7 @@ public class clock // this is Clock class
   }
   
   input.close();
+  
  }
  
 
@@ -108,14 +136,16 @@ public class clock // this is Clock class
  //http://stackoverflow.com/questions/20331163/how-to-format-joda-time-datetime-to-only-mm-dd-yyyy
  private void printClock() throws InterruptedException, IOException 
  { 
-  // Convert hh to 24 hour equiv; used to calculate the seconds of the day
+  // Convert hh to 24 hour equiv; used to calculate the milliseconds of the day
   int HH = hh;
 
-  if(AM_or_PM.equals("PM"))
-   HH += 12;
+  if(AM_or_PM.equals("PM") && HH != 12)//if PM add 12 hours except if it is 12 PM
+  { HH += 12; }
+   else if(AM_or_PM.equals("AM") && HH == 12)//if 12 AM, it is 0 hours from midnight
+   { HH = 0; }
   
-  // Find the difference in seconds between user specified time and actual time
-  int timeDifference = HH * 3600 + mm * 60 + ss - DateTime.now().getSecondOfDay();
+  //Find the difference in milliseconds between user specified time and actual time
+  timeDifference = (HH * 3600 + mm * 60 + ss) * 1000 - DateTime.now().getMillisOfDay();
 
   
   
@@ -126,16 +156,18 @@ public class clock // this is Clock class
   DateTimeFormatter dtf = DateTimeFormat.forPattern("mm/dd/yyyy hh:mm:ss a");
   
   // Print until the program stops
-  while(true)
+  readyFlag = true;
+ /* while(true)
   {
    // Parsing the date
    DateTime jodatime = dtf.parseDateTime(dtf.print(DateTime.now().plusSeconds(timeDifference)));
    // Format for output
    DateTimeFormatter dtfOut = DateTimeFormat.forPattern("hh:mm:ss a");
-   // Printing the date
-   System.out.println(dtfOut.print(jodatime));
+   // Printing the time
+   //System.out.println(dtfOut.print(jodatime));
+   timeString = dtfOut.print(jodatime);
    Thread.sleep(700); //This line is put in to prevent the terminal from getting spammed.
-  }
+  }*/
   
  }
 
@@ -199,6 +231,6 @@ public class clock // this is Clock class
 	 {
 		 return false;
 	 }
- }
+ }}
  
  
