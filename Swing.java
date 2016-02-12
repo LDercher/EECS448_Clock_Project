@@ -17,7 +17,7 @@ public class Swing3 extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 
-	public static void main(String[] a) {
+	public static void main(String[] args) {
 		
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	    ge.getAllFonts();
