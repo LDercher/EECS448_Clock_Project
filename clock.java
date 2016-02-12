@@ -157,6 +157,11 @@ public class clock // this is Clock class
 	 
 	 while (!userChoice.equalsIgnoreCase("exit"))
 	 {
+		 System.out.println("1) To switch time format from AM/PM to military, enter 'switch'.");
+		 System.out.println("2) To change the time, enter 'time'");
+		 System.out.println("3) To exit, enter 'exit.'");
+		 userChoice = input.nextLine();
+		 
 		 if (userChoice.equalsIgnoreCase("switch"))
 		 {
 			 if (militaryTime == true)
@@ -231,7 +236,6 @@ public class clock // this is Clock class
 		 }
 		 else
 		 {
-			 System.out.println("Not specified.");
 		 }
 	 }
 	 input.close();
@@ -251,5 +255,6 @@ public class clock // this is Clock class
 		 return false;
 	 }
  }
+}
  
  
