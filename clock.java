@@ -108,7 +108,7 @@ public class clock // this is Clock class
  //http://stackoverflow.com/questions/20331163/how-to-format-joda-time-datetime-to-only-mm-dd-yyyy
  private void printClock() throws InterruptedException, IOException 
  { 
-  // Convert hh to 24 hour equiv which will then be used to calculate the seconds of the day from midnight
+  // Convert hh to 24 hour equiv which will then be used to calculate the milliseconds of the day from midnight
   int HH = hh;
 
   if(AM_or_PM.equals("PM") && HH != 12)//if PM add 12 hours except if it is 12 PM
@@ -116,8 +116,8 @@ public class clock // this is Clock class
   else if(AM_or_PM.equals("AM") && HH == 12)//if 12 AM, it is 0 hours from midnight
   { HH = 0; }
   
-  // Find the difference in seconds between user specified time and actual time
-  int timeDifference = HH * 3600 + mm * 60 + ss - DateTime.now().getSecondOfDay();
+  // Find the difference in milliseconds between user specified time and actual time
+  int timeDifference = (HH * 3600 + mm * 60 + ss) * 1000 - DateTime.now().getMillisOfDay();
 
   
   
@@ -131,7 +131,7 @@ public class clock // this is Clock class
   while(true)
   {
    // Parsing the date
-   DateTime jodatime = dtf.parseDateTime(dtf.print(DateTime.now().plusSeconds(timeDifference)));
+   DateTime jodatime = dtf.parseDateTime(dtf.print(DateTime.now().plusMillis(timeDifference)));
    // Format for output
    DateTimeFormatter dtfOut = DateTimeFormat.forPattern("hh:mm:ss a");
    // Printing the date
