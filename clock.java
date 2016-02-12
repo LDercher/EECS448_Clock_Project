@@ -50,7 +50,26 @@ public class clock // this is Clock class
  {
   // TODO Auto-generated method stub
   Scanner input = new Scanner(System.in);
-
+  int temp = -1;
+  System.out.println("Choose: 1.) military time(24 hour)");
+  System.out.print("        2.) Non-military time(12 hour): ");
+  while(temp < 1 || temp > 2)
+  {
+	  temp = input.nextInt();
+	  if(temp < 1 || temp > 2)
+	  {
+		  System.out.println("Choose: 1.) military time(24 hour)");
+		  System.out.print("        2.) Non-military time(12 hour): ");
+	  }
+	  if(temp == 1)
+	  {
+		  militaryTime = true;
+	  }
+	  if(temp == 2)
+	  {
+		  militaryTime = false;
+	  }
+  }
   System.out.print("Insert hh:");
   while(hh < 1 || hh > 12)
   {
@@ -77,6 +96,19 @@ public class clock // this is Clock class
    {
     System.out.print("ss must be between 0-59, try again:");
    }
+  }
+    if(militaryTime == false)
+  {
+	  System.out.print("Insert AM or PM:");
+	  AM_or_PM = input.nextLine();
+	  while(!AM_or_PM.equals("AM") && !AM_or_PM.equals("PM"))
+	  {
+	   AM_or_PM = input.nextLine();
+	   if(!AM_or_PM.equals("AM") && !AM_or_PM.equals("PM"))
+	   {
+	    System.out.print("AM or PM, try again:");
+	   }
+	  }
   }
  }
   public void AMorPM(){
