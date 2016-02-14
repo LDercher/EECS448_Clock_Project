@@ -106,6 +106,14 @@ class WatchPanel extends JPanel implements Runnable {
 	    	swingClock.sethh(hhmmss_meridian_military.hh_);
 	    	swingClock.setmm(hhmmss_meridian_military.mm_);
 	    	swingClock.setss(hhmmss_meridian_military.ss_);
+	    	
+	    	if(hhmmss_meridian_military.AM_or_PM_ == true)
+	    		swingClock.AM_or_PM = "PM";
+			else
+				swingClock.AM_or_PM = "AM";
+	    	
+	    	swingClock.militaryTime = hhmmss_meridian_military.military_;
+	    	
 	    	swingClock.settimeDifference();
 	    	
 	    	hhmmss_meridian_military.timeChanged = false;
