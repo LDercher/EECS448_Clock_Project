@@ -22,9 +22,9 @@ public class clock // this is Clock class
   mm = -1; 
   ss = -1; 
   AM_or_PM = null;
-  input();
-  //printMenu();
-  try {
+ // input();
+  printMenu();
+  /*try {
    printClock();
   } catch (InterruptedException e) {
    // TODO Auto-generated catch block
@@ -33,7 +33,7 @@ public class clock // this is Clock class
    // TODO Auto-generated catch block
    e.printStackTrace();
   }
-  
+  */
  }
 
  //hh is hours, mm is minutes, ss is seconds, AM_or_PM is AM or PM
@@ -201,19 +201,20 @@ public class clock // this is Clock class
  
  //Added code
  //changes to 24hour format
- //i changed the code in the printClock() a little.
- //the menu so far. i'm not sure if i should include anything else.
- public void printMenu()
+ String userChoice = "";
+ private void printMenu()
  {
-	 Scanner input = new Scanner(System.in);
-	 String userChoice = "";
-	 
+	 Scanner userIn = new Scanner(System.in);
+
 	 do 
 	 {
-		 System.out.println("1) To switch time format from AM/PM to military, enter 'switch'.");
-		 System.out.println("2) To change the time, enter 'time'");
-		 System.out.println("3) To exit, enter 'exit.'");
-		 userChoice = input.nextLine();
+		 
+		System.out.println("1) To switch time format from AM/PM to military, enter 'switch'.");
+		System.out.println("2) To change the time, enter 'time'");
+		System.out.println("3) To exit, enter 'exit'");
+		if (userIn.hasNextLine()) {
+		    userChoice = userIn.nextLine();
+		}
 		 
 		 if (userChoice.equalsIgnoreCase("switch"))
 		 {
@@ -237,6 +238,7 @@ public class clock // this is Clock class
 					hh -= 12;
 				}
 			 }
+
 		 }
 		 else if (userChoice.equalsIgnoreCase("time"))
 		 {
@@ -251,11 +253,11 @@ public class clock // this is Clock class
 				 hh = -4;
 				  while(hh < 0 || hh > 23)
 				  {
-					  Num_S = input.nextLine();
+					  Num_S = userIn.nextLine();
 					  while (!Num_S.matches("\\d+$")) //from: http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
 					  {
 						 System.out.print("not valid number. try again: ");
-						 Num_S = input.nextLine();
+						 Num_S = userIn.nextLine();
 					  }
 					   hh = Integer.parseInt(Num_S);
 					  //hh = input.nextInt();
@@ -269,11 +271,11 @@ public class clock // this is Clock class
 				  while(mm < 0 || mm > 59)
 				  {
 					//  mm = input.nextInt();
-					  Num_S = input.nextLine();
+					  Num_S = userIn.nextLine();
 					  while (!Num_S.matches("\\d+$")) //from: http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
 					  {
 						 System.out.print("not valid number. try again: ");
-						 Num_S = input.nextLine();
+						 Num_S = userIn.nextLine();
 					  }
 					   mm = Integer.parseInt(Num_S);
 					  if(mm < 0 || mm > 59)
@@ -291,11 +293,11 @@ public class clock // this is Clock class
 				 while(hh < 1 || hh > 12)
 				 {
 					 //hh = input.nextInt();
-					  Num_S = input.nextLine();
+					  Num_S = userIn.nextLine();
 					  while (!Num_S.matches("\\d+$")) //from: http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
 					  {
 						 System.out.print("not valid number. try again: ");
-						 Num_S = input.nextLine();
+						 Num_S = userIn.nextLine();
 					  }
 					   hh = Integer.parseInt(Num_S);
 					 if(hh < 1 || hh > 12)
@@ -308,11 +310,11 @@ public class clock // this is Clock class
 				 while(mm < 0 || mm > 59)
 				 {
 					 //mm = input.nextInt();
-					  Num_S = input.nextLine();
+					  Num_S = userIn.nextLine();
 					  while (!Num_S.matches("\\d+$")) //from: http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
 					  {
 						 System.out.print("not valid number. try again: ");
-						 Num_S = input.nextLine();
+						 Num_S = userIn.nextLine();
 					  }
 					   mm = Integer.parseInt(Num_S);
 					 if(mm < 0 || mm > 59)
@@ -323,19 +325,21 @@ public class clock // this is Clock class
 				 ss = 0;
 				 //System.out.print("Insert AM or PM:");
 				 System.out.print("Insert AM or PM:");
-				  AM_or_PM = input.nextLine();
+				  AM_or_PM = userIn.nextLine();
 				  while(!AM_or_PM.equalsIgnoreCase("AM") && !AM_or_PM.equalsIgnoreCase("PM"))
 				  {
 				    System.out.print("AM or PM, try again:");
-				    AM_or_PM = input.nextLine();
+				    AM_or_PM = userIn.nextLine();
 				  }
 			 }
+
 		 }
 		 else
 		 {
+
 		 }
 	 } while (!userChoice.equalsIgnoreCase("exit"));
-	 input.close();
+	 userIn.close();
  }
 }
  
