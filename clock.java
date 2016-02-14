@@ -118,11 +118,14 @@ public class clock
 	 {
 		// Convert hh to 24 hour equiv; used to calculate the milliseconds of the day
 		  int HH = hh;
-	
-		  if(AM_or_PM.equals("PM") && HH != 12)//if PM add 12 hours except if it is 12 PM
-		  { HH += 12; }
-		   else if(AM_or_PM.equals("AM") && HH == 12)//if 12 AM, it is 0 hours from midnight
-		   { HH = 0; }
+		  if(militaryTime == false)
+		  {
+			  if(AM_or_PM.equals("PM") && HH != 12)//if PM add 12 hours except if it is 12 PM
+			  { HH += 12; }
+			   else if(AM_or_PM.equals("AM") && HH == 12)//if 12 AM, it is 0 hours from midnight
+			   { HH = 0; }
+		  }
+		  
 		 timeDifference = (HH * 3600 + mm * 60 + ss) * 1000 - DateTime.now().getMillisOfDay();
 	 }
  
@@ -141,6 +144,9 @@ public class clock
   Scanner input = new Scanner(System.in);
   
   int temp = -1;
+  hh = -1; 
+  mm = -1; 
+  ss = -1;
   System.out.println("Choose: 1.) military time(24 hour)");
   System.out.print("        2.) Non-military time(12 hour): ");
   while(temp < 1 || temp > 2)
@@ -168,6 +174,7 @@ public class clock
 	  }
   }
   /** set hh*/
+  
   System.out.print("Insert hh:");
   if(militaryTime == true)
   {
