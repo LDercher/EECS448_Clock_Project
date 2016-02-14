@@ -218,12 +218,12 @@ public class clock // this is Clock class
 		 
 		 if (userChoice.equalsIgnoreCase("switch"))
 		 {
-			 if (militaryTime == true)
+			 if (militaryTime == false)
 			 {	System.out.println("You are now in military time.");
-				 militaryTime = false;	}
+				 militaryTime = true;	}
 			 else
 			 {	 System.out.println("You are now in AM/PM format.");
-				 militaryTime = true;	}
+				 militaryTime = false;	}
 			 
 			 //changing the time format
 			 if (militaryTime == true)
