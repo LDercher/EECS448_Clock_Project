@@ -75,7 +75,15 @@ public class clock
 	 /** Parsing the date*/
 	 DateTime jodatime = dtf.parseDateTime(dtf.print(DateTime.now().plusMillis(timeDifference)));
 	 /** Format for output*/
-	 DateTimeFormatter dtfOut = DateTimeFormat.forPattern("hh:mm:ss a");
+	 DateTimeFormatter dtfOut;
+	 if(militaryTime == true)
+	 {
+		 dtfOut = DateTimeFormat.forPattern("HH:mm:ss");
+	 }
+	 else
+	 {
+		 dtfOut = DateTimeFormat.forPattern("hh:mm:ss a");
+	 }
 	 /** Printing the time*/
 	 timeString = dtfOut.print(jodatime);
 	 /** old code*/
@@ -126,14 +134,29 @@ public class clock
   }
   /** set hh*/
   System.out.print("Insert hh:");
-  while(hh < 1 || hh > 12)
+  if(militaryTime == true)
   {
-   hh = input.nextInt();
-   if(hh < 1 || hh > 12)
-   {
-    System.out.print("hh must be between 1-12, try again:");
-   }
+	  while(hh < 0 || hh > 23)
+	  {
+	   hh = input.nextInt();
+	   if(hh < 0 || hh > 23)
+	   {
+	    System.out.print("hh must be between 0-23, try again:");
+	   }
+	  }
   }
+  else
+  {
+	  while(hh < 1 || hh > 12)
+	  {
+		   hh = input.nextInt();
+		   if(hh < 1 || hh > 12)
+		   {
+			   System.out.print("hh must be between 1-12, try again:");
+		   }
+	  }
+  }
+  
   /** set mm*/
   System.out.print("Insert mm:");
   while(mm < 0 || mm > 59)
