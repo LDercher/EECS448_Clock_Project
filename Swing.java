@@ -10,7 +10,7 @@ import javax.swing.*;
 
 public class Swing extends JFrame {
     WatchPanel watch = new WatchPanel();
-   // Test a = new Test();
+    ContinuousMenu printMenu = new ContinuousMenu();
 
 	public Swing() 
     {
@@ -27,22 +27,48 @@ public class Swing extends JFrame {
     	Swing clock = new Swing();
     }
 }
-/*
-class Test implements Runnable{
-	Thread runner;
-	Test() {
+
+class ContinuousMenu implements Runnable{
+	Thread runner; int test = 0;
+	ContinuousMenu() {
         if (runner == null) {
             runner = new Thread(this);
             runner.start();
         }
     }
 	public void run(){
+		clock a = new clock(1);
 		while(true){
-			System.out.println("WORKS");
+			
+			//Insert printMenu() call on while loop
+			
+			a.input();
+			
+			hhmmss_meridian_military.hh_ = a.hh;
+			hhmmss_meridian_military.mm_ = a.mm;
+			hhmmss_meridian_military.ss_ = a.ss;
+			  
+			  hhmmss_meridian_military.timeChanged = true;
 		}
 	}
 }
-*/
+
+//This class is used to communicate between ContinuousMenu thread and the WatchPanel thread
+//ContinuousMenu takes input from the user to specify hh,mm,ss,AM or PM, or military time
+//Those specified values are set in this class by ContinuosMenu which are then pulled from by WatchPanel.
+//WatchPanel pulls the values then sets them into the clock.
+class hhmmss_meridian_military
+{
+	public static int hh_ = 0;
+	public static int mm_ = 0;
+	public static int ss_ = 0;
+	public static boolean AM_or_PM_ = false;
+	public static boolean military_ = false;
+	
+	public static boolean timeChanged = false;
+}
+
+
 class WatchPanel extends JPanel implements Runnable {
 
 	Thread runner;
@@ -68,6 +94,16 @@ class WatchPanel extends JPanel implements Runnable {
     @Override
     public void paintComponent(Graphics g) 
 	 {
+    	if(hhmmss_meridian_military.timeChanged)
+    	{
+	    	swingClock.sethh(hhmmss_meridian_military.hh_);
+	    	swingClock.setmm(hhmmss_meridian_military.mm_);
+	    	swingClock.setss(hhmmss_meridian_military.ss_);
+	    	swingClock.settimeDifference();
+	    	
+	    	hhmmss_meridian_military.timeChanged = false;
+    	}
+
     	
     	Font myFont = new Font("Georgia", Font.BOLD, 46);
         g.setFont(myFont);
@@ -85,4 +121,3 @@ class WatchPanel extends JPanel implements Runnable {
          
       }
 }
-
