@@ -1,15 +1,9 @@
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.Scanner;
 
 import org.joda.time.DateTime;
-import org.joda.time.Interval;
-import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;
 
 /**
  * 
@@ -28,26 +22,40 @@ import org.joda.time.format.PeriodFormatterBuilder;
 public class clock
 {
  /** constructor method*/
- public clock()
- {
-  hh = -1; 
-  mm = -1; 
-  ss = -1; 
-  AM_or_PM = "AM";
-  input();
-  timeString = "";
-  
-  try {
-   printClock();
-  } catch (InterruptedException e) {
-   // TODO Auto-generated catch block
-   e.printStackTrace();
-  } catch (IOException e) {
-   // TODO Auto-generated catch block
-   e.printStackTrace();
-  }
-
- }
+//constructor method
+	 public clock()
+	 {
+	  hh = -1; 
+	  mm = -1; 
+	  ss = -1; 
+	  AM_or_PM = "AM";
+	  timeString = "";
+	  timeDifference = 0;
+	  input();
+	  
+	  
+	  try {
+	   initializeClock();
+	  } catch (InterruptedException e) {
+	   // TODO Auto-generated catch block
+	   e.printStackTrace();
+	  } catch (IOException e) {
+	   // TODO Auto-generated catch block
+	   e.printStackTrace();
+	  }
+	
+	 }
+	 public clock(int menu)
+	 {
+		 //pass an integer to skip input() call; this is used to get menu output
+		 hh = -1; 
+		  mm = -1; 
+		  ss = -1; 
+		  AM_or_PM = "AM";
+		  timeString = "";
+		  timeDifference = 0;
+	 }
+	
 
  /**
   * hh is hours, mm is minutes, ss is seconds, AM_or_PM is AM or PM, militaryTime switches 12-24 hour format
@@ -90,6 +98,33 @@ public class clock
 	 //System.out.println(dtfOut.print(jodatime));
 	 //Thread.sleep(700); //This line is put in to prevent the terminal from getting spammed.
  }
+	
+	 public void sethh(int hh)
+	 {
+		 this.hh = hh;
+	 }
+	 
+	 public void setmm(int mm)
+	 {
+		 this.mm = mm;
+	 }
+	 
+	 public void setss(int ss)
+	 {
+		 this.ss = ss;
+	 }
+ 
+	 public void settimeDifference()
+	 {
+		// Convert hh to 24 hour equiv; used to calculate the milliseconds of the day
+		  int HH = hh;
+	
+		  if(AM_or_PM.equals("PM") && HH != 12)//if PM add 12 hours except if it is 12 PM
+		  { HH += 12; }
+		   else if(AM_or_PM.equals("AM") && HH == 12)//if 12 AM, it is 0 hours from midnight
+		   { HH = 0; }
+		 timeDifference = (HH * 3600 + mm * 60 + ss) * 1000 - DateTime.now().getMillisOfDay();
+	 }
  
  public boolean getReadyFlag()
  {
@@ -219,42 +254,15 @@ public class clock
    * @throws InterruptedException
    * @throws IOException
    */
- private void printClock() throws InterruptedException, IOException 
- { 
-  // Convert hh to 24 hour equiv; used to calculate the milliseconds of the day
-  int HH = hh;
-
-  if(AM_or_PM.equals("PM") && HH != 12)//if PM add 12 hours except if it is 12 PM
-  { HH += 12; }
-   else if(AM_or_PM.equals("AM") && HH == 12)//if 12 AM, it is 0 hours from midnight
-   { HH = 0; }
-  
-  /**Find the difference in milliseconds between user specified time and actual time*/
-  timeDifference = (HH * 3600 + mm * 60 + ss) * 1000 - DateTime.now().getMillisOfDay();
-
-  
-  
-  System.out.println("---------------printClock()---------------");
-  
-  
-  // Format for input
-  DateTimeFormatter dtf = DateTimeFormat.forPattern("mm/dd/yyyy hh:mm:ss a");
-  
-  // Print until the program stops
-  readyFlag = true;
- /* while(true)
-  {
-   // Parsing the date
-   DateTime jodatime = dtf.parseDateTime(dtf.print(DateTime.now().plusSeconds(timeDifference)));
-   // Format for output
-   DateTimeFormatter dtfOut = DateTimeFormat.forPattern("hh:mm:ss a");
-   // Printing the time
-   //System.out.println(dtfOut.print(jodatime));
-   timeString = dtfOut.print(jodatime);
-   Thread.sleep(700); //This line is put in to prevent the terminal from getting spammed.
-  }*/
-  
- }
+private void initializeClock() throws InterruptedException, IOException 
+	 { 
+	  settimeDifference();
+	
+	  System.out.println("---------------print clock---------------");
+	  
+	  readyFlag = true;
+	  
+	 }
 
  
  //Added code
