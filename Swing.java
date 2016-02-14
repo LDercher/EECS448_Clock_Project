@@ -10,7 +10,7 @@ import javax.swing.*;
 
 public class Swing extends JFrame {
     WatchPanel watch = new WatchPanel();
-    ContinuousMenu printMenu = new ContinuousMenu();
+    ConsoleMenu printMenu = new ConsoleMenu();
 
 	public Swing() 
     {
@@ -28,9 +28,9 @@ public class Swing extends JFrame {
     }
 }
 
-class ContinuousMenu implements Runnable{
+class ConsoleMenu implements Runnable{
 	Thread runner; int test = 0;
-	ContinuousMenu() {
+	ConsoleMenu() {
         if (runner == null) {
             runner = new Thread(this);
             runner.start();
@@ -47,14 +47,21 @@ class ContinuousMenu implements Runnable{
 			hhmmss_meridian_military.hh_ = a.hh;
 			hhmmss_meridian_military.mm_ = a.mm;
 			hhmmss_meridian_military.ss_ = a.ss;
+			
+			if(a.AM_or_PM.equals("PM"))
+				hhmmss_meridian_military.AM_or_PM_ = true;
+			else
+				hhmmss_meridian_military.AM_or_PM_ = false;
+			
+			hhmmss_meridian_military.military_ = a.militaryTime;
 			  
-			  hhmmss_meridian_military.timeChanged = true;
+			hhmmss_meridian_military.timeChanged = true;
 		}
 	}
 }
 
-//This class is used to communicate between ContinuousMenu thread and the WatchPanel thread
-//ContinuousMenu takes input from the user to specify hh,mm,ss,AM or PM, or military time
+//This class is used to communicate between ConsoleMenu thread and the WatchPanel thread
+//ConsoleMenu takes input from the user to specify hh,mm,ss,AM or PM, or military time
 //Those specified values are set in this class by ContinuosMenu which are then pulled from by WatchPanel.
 //WatchPanel pulls the values then sets them into the clock.
 class hhmmss_meridian_military
@@ -62,7 +69,7 @@ class hhmmss_meridian_military
 	public static int hh_ = 0;
 	public static int mm_ = 0;
 	public static int ss_ = 0;
-	public static boolean AM_or_PM_ = false;
+	public static boolean AM_or_PM_ = false;//AM == false, PM == true
 	public static boolean military_ = false;
 	
 	public static boolean timeChanged = false;
