@@ -135,7 +135,7 @@ public class clock
  //I assume this method is only temporary and will be changed as we employ a GUI.
  //Note there is no exception handling for this method yet so giving non-numerical input for hh,mm, or ss crashes the program.
  */
- private void input() 
+ public void input() 
  {
   // TODO Auto-generated method stub
   Scanner input = new Scanner(System.in);
