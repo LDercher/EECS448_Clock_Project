@@ -1,15 +1,9 @@
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.Scanner;
 
 import org.joda.time.DateTime;
-import org.joda.time.Interval;
-import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;
 
 //How to import timing library taken from: http://stackoverflow.com/questions/12105164/java-joda-time-download-and-install-step-by-step
 
@@ -22,11 +16,13 @@ public class clock // this is Clock class
   mm = -1; 
   ss = -1; 
   AM_or_PM = "AM";
-  input();
   timeString = "";
+  timeDifference = 0;
+  input();
+  
   
   try {
-   printClock();
+   initializeClock();
   } catch (InterruptedException e) {
    // TODO Auto-generated catch block
    e.printStackTrace();
@@ -35,6 +31,10 @@ public class clock // this is Clock class
    e.printStackTrace();
   }
 
+ }
+ public clock(int menu)
+ {
+	 //pass an integer to skip input constructor; this is used to get menu output
  }
 
  //hh is hours, mm is minutes, ss is seconds, AM_or_PM is AM or PM
@@ -46,11 +46,6 @@ public class clock // this is Clock class
  String timeString;
  boolean readyFlag = false;
  int timeDifference;
- 
- public String getTime()
- {
-	 return timeString;
- }
  
  public void setTime()
  {
@@ -65,7 +60,39 @@ public class clock // this is Clock class
 	   //Thread.sleep(700); //This line is put in to prevent the terminal from getting spammed.
  }
  
- public boolean getReadyFlag()
+ public String getTime()
+ {
+	 return timeString;
+ }
+
+ public void sethh(int hh)
+ {
+	 this.hh = hh;
+ }
+ 
+ public void setmm(int mm)
+ {
+	 this.mm = mm;
+ }
+ 
+ public void setss(int ss)
+ {
+	 this.ss = ss;
+ }
+ 
+ public void settimeDifference()
+ {
+	// Convert hh to 24 hour equiv; used to calculate the milliseconds of the day
+	  int HH = hh;
+
+	  if(AM_or_PM.equals("PM") && HH != 12)//if PM add 12 hours except if it is 12 PM
+	  { HH += 12; }
+	   else if(AM_or_PM.equals("AM") && HH == 12)//if 12 AM, it is 0 hours from midnight
+	   { HH = 0; }
+	 timeDifference = (HH * 3600 + mm * 60 + ss) * 1000 - DateTime.now().getMillisOfDay();
+ }
+ 
+public boolean getReadyFlag()
  {
 	 return readyFlag;
  }
@@ -73,12 +100,12 @@ public class clock // this is Clock class
  //This method will take the user specified input for hh,mm,ss,AM.
  //I assume this method is only temporary and will be changed as we employ a GUI.
  //Note there is no exception handling for this method yet so giving non-numerical input for hh,mm, or ss crashes the program.
- private void input() 
+ public void input() 
  {
   // TODO Auto-generated method stub
   Scanner input = new Scanner(System.in);
 
-  System.out.print("Insert hh:");
+  System.out.print("Insert hh:");hh = -1;
   while(hh < 1 || hh > 12)
   {
    hh = input.nextInt();
@@ -87,7 +114,7 @@ public class clock // this is Clock class
     System.out.print("hh must be between 1-12, try again:");
    }
   }
-  System.out.print("Insert mm:");
+  System.out.print("Insert mm:");mm = -1;
   while(mm < 0 || mm > 59)
   {
    mm = input.nextInt();
@@ -96,7 +123,7 @@ public class clock // this is Clock class
     System.out.print("mm must be between 0-59, try again:");
    }
   }
-  System.out.print("Insert ss:");
+  System.out.print("Insert ss:");ss = -1;
   while(ss < 0 || ss > 59)
   {
    ss = input.nextInt();
@@ -105,6 +132,9 @@ public class clock // this is Clock class
     System.out.print("ss must be between 0-59, try again:");
    }
   }
+  
+  
+  //input.close();
  }
   public void AMorPM(){
   Scanner input = new Scanner(System.in);
@@ -134,18 +164,9 @@ public class clock // this is Clock class
  //Sources:
  //http://kodejava.org/how-to-add-hours-minutes-seconds-into-datetime-in-joda-time/
  //http://stackoverflow.com/questions/20331163/how-to-format-joda-time-datetime-to-only-mm-dd-yyyy
- private void printClock() throws InterruptedException, IOException 
+ private void initializeClock() throws InterruptedException, IOException 
  { 
-  // Convert hh to 24 hour equiv; used to calculate the milliseconds of the day
-  int HH = hh;
-
-  if(AM_or_PM.equals("PM") && HH != 12)//if PM add 12 hours except if it is 12 PM
-  { HH += 12; }
-   else if(AM_or_PM.equals("AM") && HH == 12)//if 12 AM, it is 0 hours from midnight
-   { HH = 0; }
-  
-  //Find the difference in milliseconds between user specified time and actual time
-  timeDifference = (HH * 3600 + mm * 60 + ss) * 1000 - DateTime.now().getMillisOfDay();
+  settimeDifference();
 
   
   
@@ -153,7 +174,7 @@ public class clock // this is Clock class
   
   
   // Format for input
-  DateTimeFormatter dtf = DateTimeFormat.forPattern("mm/dd/yyyy hh:mm:ss a");
+  //DateTimeFormatter dtf = DateTimeFormat.forPattern("mm/dd/yyyy hh:mm:ss a");
   
   // Print until the program stops
   readyFlag = true;
@@ -232,5 +253,4 @@ public class clock // this is Clock class
 		 return false;
 	 }
  }}
- 
  
