@@ -202,7 +202,14 @@ public class clock
   {
 	  while(hh < 0 || hh > 23)
 	  {
-	   hh = input.nextInt();
+		    Num_S = input.nextLine();
+			   while (!Num_S.matches("\\d+$")) //from: http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+			  {
+				 System.out.print("not valid number. try again: ");
+				 Num_S = input.nextLine();
+			  }
+			   hh = Integer.parseInt(Num_S);
+	   //hh = input.nextInt();
 	   if(hh > 12)
 	   {   AM_or_PM = "PM";	hh -=12;}
 	   else
@@ -222,7 +229,14 @@ public class clock
   {
 	  while(hh < 1 || hh > 12)
 	  {
-		   hh = input.nextInt();
+		    Num_S = input.nextLine();
+			   while (!Num_S.matches("\\d+$")) //from: http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+			  {
+				 System.out.print("not valid number. try again: ");
+				 Num_S = input.nextLine();
+			  }
+			   hh = Integer.parseInt(Num_S);
+		   //hh = input.nextInt();
 		   if(hh < 1 || hh > 12)
 		   {
 			   System.out.print("hh must be between 1-12, try again:");
@@ -234,7 +248,14 @@ public class clock
   System.out.print("Insert mm:");
   while(mm < 0 || mm > 59)
   {
-   mm = input.nextInt();
+	    Num_S = input.nextLine();
+	   while (!Num_S.matches("\\d+$")) //from: http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+	  {
+		 System.out.print("not valid number. try again: ");
+		 Num_S = input.nextLine();
+	  }
+	   mm = Integer.parseInt(Num_S);
+  // mm = input.nextInt();
    if(mm < 0 || mm > 59)
    {
     System.out.print("mm must be between 0-59, try again:");
@@ -244,7 +265,14 @@ public class clock
   System.out.print("Insert ss:");
   while(ss < 0 || ss > 59)
   {
-   ss = input.nextInt();
+	    Num_S = input.nextLine();
+	   while (!Num_S.matches("\\d+$")) //from: http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+	  {
+		 System.out.print("not valid number. try again: ");
+		 Num_S = input.nextLine();
+	  }
+	   ss = Integer.parseInt(Num_S);
+   //ss = input.nextInt();
    if(ss < 0 || ss > 59)
    {
     System.out.print("ss must be between 0-59, try again:");
@@ -304,67 +332,4 @@ private void initializeClock() throws InterruptedException, IOException
 	  
 	 }
 
- 
- //Added code
- //changes to 24hour format
- //i changed the code in the printClock() a little.
- //the menu so far. i'm not sure if i should include anything else.
- /**
-  * Prints the Menu 
-  */
- public void printMenu()
- {
-	 System.out.println("1) To switch time format from AM/PM to military, enter 'switch'.");
-	 System.out.println("2) To change the time, enter 'time'");
-	 System.out.println("3) To exit, enter 'exit.'");
-	 
-	 Scanner input = new Scanner(System.in);
-	 String userChoice = input.nextLine();
-	 
-	 while (!userChoice.equalsIgnoreCase("exit"))
-	 {
-		 if (userChoice.equalsIgnoreCase("switch"))
-		 {
-			 if (militaryTime == true)
-			 {	militaryTime = false;	}
-			 else
-			 {	 militaryTime = true;	}
-			 
-			 //changing the time format
-			 if (militaryTime == true)
-			 {
-				 if (AM_or_PM.equalsIgnoreCase("PM"))
-				 {	hh += 12; }
-			 }
-			 else
-			 {
-				AMorPM(); 
-			 }
-		 }
-		 else if (userChoice.equalsIgnoreCase("time"))
-		 {
-			 //input();
-			 //changes time
-		 }
-		 else
-		 {
-			 System.out.println("Not specified.");
-		 }
-	 }
-	 input.close();
- }
- 
- //catches things that aren't integers, ie. doubles/strings
- //i'm not sure if it works yet
- public boolean integerException(String userInput)
- {
-	 try
-	 {
-		 int check = Integer.parseInt(userInput);
-		 return true;
-	 }
-	 catch (IndexOutOfBoundsException e)
-	 {
-		 return false;
-	 }
- }}
+}
