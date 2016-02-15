@@ -1,4 +1,9 @@
-Work Cited:
+EECS 448 Clock Project -- Spring 2016
+
+
+
+
+Works Cited:
 
 Import timing library:
 http://stackoverflow.com/questions/12105164/java-joda-time-download-and-install-step-by-step
@@ -9,4 +14,16 @@ http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-i
 time generation:
 http://kodejava.org/how-to-add-hours-minutes-seconds-into-datetime-in-joda-time/
 http://stackoverflow.com/questions/20331163/how-to-format-joda-time-datetime-to-only-mm-dd-yyyy
+
+swing set & timer class:
+http://stackoverflow.com/questions/2959718/dynamic-clock-in-java
+http://stackoverflow.com/questions/14058563/java-creating-digital-clock-using-swing
+http://workbench.cadenhead.org/book/21java/source/day13/DigitalClock.java
+
+swing set JFrame documentation:
+https://docs.oracle.com/javase/7/docs/api/javax/swing/JFrame.html
+
+information on WatchPanel/Runnable:
+http://alvinalexander.com/java/jwarehouse/netbeans-src/debuggercore/src/org/netbeans/modules/debugger/ui/WatchPanel.java.shtml
+
 
