@@ -18,8 +18,9 @@ http://stackoverflow.com/questions/2959718/dynamic-clock-in-java
 http://stackoverflow.com/questions/14058563/java-creating-digital-clock-using-swing
 http://workbench.cadenhead.org/book/21java/source/day13/DigitalClock.java
 
-swing set JFrame documentation:
+swing set JFrame documentation and help:
 https://docs.oracle.com/javase/7/docs/api/javax/swing/JFrame.html
+http://www.tutorialspoint.com/swing/swing_jframe.htm
 
 information on WatchPanel/Runnable:
 http://alvinalexander.com/java/jwarehouse/netbeans-src/debuggercore/src/org/netbeans/modules/debugger/ui/WatchPanel.java.shtml

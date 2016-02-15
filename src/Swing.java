@@ -1,13 +1,12 @@
 import java.awt.*;
-
 import javax.swing.*;
 
 /**
  * 
- * @authors Victor Berger, Jesse Yang, Jeromy Tsai, and Cammy Vo
+ * @author Victor Berger, Jesse Yang, Jeromy Tsai, and Cammy Vo
  * EECS 448 - Clock Project
  * prof: John Gibbons
- * code freeze: February 14th, 2016
+ * code freeze: February 14th, 2016 11:59 PM
  * 
  */
 
@@ -28,24 +27,33 @@ public class Swing extends JFrame {
 	/**
 	 * Constructor for the 'Swing' class. Launches clock window, with clock
 	 * originally set at 12:00:00 AM. Will run for entire duration of program.
+	 * Includes many simple Java Swing Set look&feel commands.
 	 * 
 	 * @pre -
 	 * @post -
 	 * 
 	 */
 	public Swing() {
+		
 		super("EECS448 - Clock Project");
+		
 		setSize(445, 160);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		JPanel pane = new JPanel();
+		
 		pane.setLayout(new GridLayout(1, 1, 15, 15));
+		
 		pane.add(watch);
+		
 		setContentPane(pane);
+		
 		setVisible(true);
 	}
 
 	/**
-	 * Main method
+	 * Main method. Initializes 'clock' object used to run the clock counter
 	 * 
 	 */
 	public static void main(String[] arguments) {
@@ -56,8 +64,11 @@ public class Swing extends JFrame {
 
 /**
  * 
- * Class 'ConsoleMenu' implements the thread used to have the console menu continually running and 
- * 	able to accept real-time inp
+ * Class 'ConsoleMenu' implements the thread used to have the console menu
+ * continually running and able to accept real-time input.
+ *
+ * All classes that implement the 'Runnable' interface were based on:
+ * @see http://workbench.cadenhead.org/book/21java/source/day13/DigitalClock.java
  *
  */
 class ConsoleMenu implements Runnable {
@@ -72,10 +83,11 @@ class ConsoleMenu implements Runnable {
 	}
 
 	/**
-	 * Takes clock input from user and makes the necessary changes
+	 * Continuously takes clock input from user and makes the necessary changes on time set
+	 * and format
 	 * 
-	 * @pre -
-	 * @post -
+	 * @pre continuously called by thread
+	 * @post time set and format get updated
 	 * @return void
 	 */
 	public void run() {
@@ -104,30 +116,31 @@ class ConsoleMenu implements Runnable {
 }
 
 /**
- * The 'hhmmss_meridian_military' class is used to communicate between ConsoleMenu thread and the
- * WatchPanel thread ConsoleMenu takes input from the user to specify
- * hh,mm,ss,AM or PM, or military time Those specified values are set in this
- * class by ContinuosMenu which are then pulled from by WatchPanel. WatchPanel
- * pulls the values then sets them into the clock.
+ * The 'hhmmss_meridian_military' class is used to communicate between
+ * ConsoleMenu thread and the WatchPanel thread ConsoleMenu takes input from the
+ * user to specify hh, mm, ss, AM or PM, or military time Those specified values
+ * are set in this class by ContinuosMenu which are then pulled from by
+ * WatchPanel. WatchPanel pulls the values then sets them into the clock.
  */
 
 class hhmmss_meridian_military {
 	public static int hh_ = 0;
 	public static int mm_ = 0;
 	public static int ss_ = 0;
-	public static boolean AM_or_PM_ = false;// AM == false, PM == true
+	public static boolean AM_or_PM_ = false; // AM == false, PM == true
 	public static boolean military_ = false;
-
 	public static boolean timeChanged = false;
-
 	public static boolean changetimeDifference = false;
 }
 
+/**
+ * The "WatchPanel" class implements 'thread runner' to set the time values into the clock
+ * 
+ * Based on:
+ * @see http://workbench.cadenhead.org/book/21java/source/day13/DigitalClock.java * 
+ */
 class WatchPanel extends JPanel implements Runnable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	Thread runner;
 
@@ -139,6 +152,10 @@ class WatchPanel extends JPanel implements Runnable {
 
 	}
 
+	/**
+	* @post implements while(true) loop that generates thread
+	* @return void
+	*/
 	public void run() {
 		while (true) {
 			repaint();
@@ -149,12 +166,15 @@ class WatchPanel extends JPanel implements Runnable {
 		}
 	}
 
-	clock swingClock = new clock();
+	clock swingClock = new clock(); // initializes swingClock object of type
+									// 'clock' used in the 'paintComponent'
+									// method
 
 	/**
-	 * 
-	 * Sets 'paint' configurations of swing window, including parameters such as
-	 * color and font.
+	 * @pre called by the swing window constructor
+	 * @return void
+	 * @post sets 'paint' configurations of swing window, including parameters such as
+	 * color and font. Receives time parameter and updates the swing window.
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
@@ -177,14 +197,22 @@ class WatchPanel extends JPanel implements Runnable {
 		}
 
 		Font myFont = new Font("Georgia", Font.BOLD, 46);
+		
 		g.setFont(myFont);
-		if (swingClock.getReadyFlag()) {
+		
+		if (swingClock.getReadyFlag()) 
+		{
 			g.setColor(getBackground());
+			
 			g.fillRect(0, 0, getSize().width, getSize().height);
+			
 			swingClock.setTime();
+			
 			String time = swingClock.getTime();
+			
 			g.setColor(Color.black);
-			g.drawString(time, 65, 66);
+			
+			g.drawString(time, 65, 66);			
 
 		}
 

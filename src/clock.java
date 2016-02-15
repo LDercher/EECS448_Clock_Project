@@ -1,30 +1,35 @@
 import java.io.IOException;
 import java.util.Scanner;
-
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 /**
  * 
- * @authors Victor Berger, Jesse Yang, Jeromy Tsai, and Cammy Vo
+ * @author Victor Berger, Jesse Yang, Jeromy Tsai, and Cammy Vo
  * EECS 448 - Clock Project
  * prof: John Gibbons
- * code freeze: February 14th, 2016
+ * code freeze: February 14th, 2016 11:59 PM
  * 
+ * For information on the Joda time library:
  * @see http://stackoverflow.com/questions/12105164/java-joda-time-download-and-install-step-by-ste
  */
 
-
 /**
  * How to import timing library taken from:
- * http://stackoverflow.com/questions/12105164
- * /java-joda-time-download-and-install-step-by-step Clock class
+ * http://stackoverflow.com/questions/12105164/java-joda-time-download-and-install-step-by-step 
+ * 
  */
 public class clock {
-	/** constructor method */
+	/**
+	 * Constructor method for main Clock class.
+	 */
 
 	public clock() {
+		/**
+		 * Sets initial values for time, format, and timeDifference variables
+		 */
+
 		hh = 0;
 		mm = 0;
 		ss = 0;
@@ -72,7 +77,12 @@ public class clock {
 		return timeString;
 	}
 
-	/** set timeString variable */
+	/**
+	 * set timeString variable
+	 * 
+	 * @return void
+	 * @post Time input is parsed and implemented
+	 */
 	public void setTime() {
 		DateTimeFormatter dtf = DateTimeFormat
 				.forPattern("mm/dd/yyyy hh:mm:ss a");
@@ -91,68 +101,109 @@ public class clock {
 
 	}
 
+	/**
+	 * @param hh
+	 * @return void Set method for 'hours' variable
+	 */
 	public void sethh(int hh) {
 		this.hh = hh;
 	}
 
+	/**
+	 * @return int (hh)
+	 * @post Get method for 'hours' variable
+	 */
 	public int gethh() {
 		return hh;
 	}
 
+	/**
+	 * @param mm
+	 * @return void Set method for 'minutes' variable
+	 */
 	public void setmm(int mm) {
 		this.mm = mm;
 	}
 
+	/**
+	 * @return int (mm)
+	 * @post Get method for 'minutes' variable
+	 */
 	public int getmm() {
 		return mm;
 	}
 
+	/**
+	 * @param ss
+	 * @return void Set method for 'seconds' variable
+	 */
 	public void setss(int ss) {
 		this.ss = ss;
 	}
 
+	/**
+	 * @return int (ss)
+	 * @post Get method for 'seconds' variable
+	 */
 	public int getss() {
 		return ss;
 	}
 
+	/**
+	 * Convert hh to 24 hour equivalent; used to calculate the milliseconds of
+	 * the day
+	 */
 	public void settimeDifference() {
-		// Convert hh to 24 hour equivalent; used to calculate the milliseconds of
-		// the day
+
 		int HH = hh;
-		if (AM_or_PM.equals("PM") && HH != 12)// if PM add 12 hours except if it
-												// is 12 PM
-		{
+		/**
+		 * if PM, add 12 hours except if it's 12 PM else-if: if 12 AM, it's 0
+		 * hours from midnight
+		 */
+		if (AM_or_PM.equals("PM") && HH != 12) {
 			HH += 12;
-		} else if (AM_or_PM.equals("AM") && HH == 12)// if 12 AM, it is 0 hours
-														// from midnight
-		{
+
+		} else if (AM_or_PM.equals("AM") && HH == 12) {
 			HH = 0;
 		}
 
+		// to calculate time difference between present time and input time
 		timeDifference = (HH * 3600 + mm * 60 + ss) * 1000
 				- DateTime.now().getMillisOfDay();
 	}
 
+	/**
+	 * 
+	 * @return boolean
+	 * @post Get method for 'seconds' variable
+	 */
 	public boolean getReadyFlag() {
 		return readyFlag;
 	}
 
+	/**
+	 * @return void Method created to design menu and receive input from user
+	 */
 	public void input() {
+		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
 
 		int temp = -1;
 
+		System.out.println(" ");
 		System.out.println("Choose:");
 		System.out.println("1.) Military time(24 hour)");
 		System.out.println("2.) Non-military time(12 hour) ");
-		System.out
-				.println("3.) Switch between AM/PM and military time formats");
+		System.out.println("3.) Switch between AM/PM and military time formats");
 		while (temp < 1 || temp > 3) {
 			Num_S = input.nextLine();
-			while (!Num_S.matches("\\d+$")) // from:
-											// http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+			while (!Num_S.matches("\\d+$"))
+			/**
+			 * @see http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+			 */
+
 			{
-				System.out.print("not valid number. try again: ");
+				System.out.print("Invalid number. Please try again: ");
 				Num_S = input.nextLine();
 			}
 			temp = Integer.parseInt(Num_S);
@@ -179,12 +230,14 @@ public class clock {
 			hh = -1;
 			mm = -1;
 			ss = -1;
-			System.out.print("Insert hh:");
+			System.out.print("Insert hh: ");
 			if (militaryTime == true) {
 				while (hh < 0 || hh > 23) {
 					Num_S = input.nextLine();
-					while (!Num_S.matches("\\d+$")) // from:
-													// http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+					while (!Num_S.matches("\\d+$"))
+					/**
+					 * @see http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+					 */
 					{
 						System.out.print("Invalid number. Please try again: ");
 						Num_S = input.nextLine();
@@ -206,8 +259,10 @@ public class clock {
 			} else {
 				while (hh < 1 || hh > 12) {
 					Num_S = input.nextLine();
-					while (!Num_S.matches("\\d+$")) // from:
-													// http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+					while (!Num_S.matches("\\d+$")) 
+					/**
+					 * @see http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+					 */
 					{
 						System.out.print("Invalid number. Please try again: ");
 						Num_S = input.nextLine();
@@ -220,11 +275,13 @@ public class clock {
 			}
 
 			/** set mm */
-			System.out.print("Insert mm:");
+			System.out.print("Insert mm: ");
 			while (mm < 0 || mm > 59) {
 				Num_S = input.nextLine();
-				while (!Num_S.matches("\\d+$")) // from:
-												// http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+				while (!Num_S.matches("\\d+$")) 
+				/**
+				* @see http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+				*/
 				{
 					System.out.print("Invalid number. Please try again: ");
 					Num_S = input.nextLine();
@@ -235,11 +292,13 @@ public class clock {
 				}
 			}
 			/** set ss */
-			System.out.print("Insert ss:");
+			System.out.print("Insert ss: ");
 			while (ss < 0 || ss > 59) {
 				Num_S = input.nextLine();
-				while (!Num_S.matches("\\d+$")) // from:
-												// http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+				while (!Num_S.matches("\\d+$")) 
+				/**
+				* @see http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+				*/
 				{
 					System.out.print("Invalid number. Please try again: ");
 					Num_S = input.nextLine();
@@ -288,12 +347,8 @@ public class clock {
 	 * specified time is calculated. This difference is used to find the user
 	 * specified time on each iteration.
 	 * 
-	 * @see http 
-	 *      ://kodejava.org/how-to-add-hours-minutes-seconds-into-datetime-in
-	 *      -joda-time/
-	 * @see http 
-	 *      ://stackoverflow.com/questions/20331163/how-to-format-joda-time-
-	 *      datetime -to-only-mm-dd-yyyy
+	 * @see http://kodejava.org/how-to-add-hours-minutes-seconds-into-datetime-in-joda-time/
+	 * @see http://stackoverflow.com/questions/20331163/how-to-format-joda-time-datetime -to-only-mm-dd-yyyy
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
