@@ -1,0 +1,12 @@
+Work Cited:
+
+Import timing library:
+http://stackoverflow.com/questions/12105164/java-joda-time-download-and-install-step-by-step
+
+error exception catching for strings to integers:
+http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+
+time generation:
+http://kodejava.org/how-to-add-hours-minutes-seconds-into-datetime-in-joda-time/
+http://stackoverflow.com/questions/20331163/how-to-format-joda-time-datetime-to-only-mm-dd-yyyy
+
