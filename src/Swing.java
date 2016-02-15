@@ -37,7 +37,9 @@ class ConsoleMenu implements Runnable{
         }
     }
 	public void run(){
-		clock a = new clock(1);
+		clock a = new clock(1, hhmmss_meridian_military.hh_,
+		hhmmss_meridian_military.mm_,
+		hhmmss_meridian_military.ss_);
 		while(true){
 			
 			//Insert printMenu() call on while loop
@@ -56,6 +58,8 @@ class ConsoleMenu implements Runnable{
 			hhmmss_meridian_military.military_ = a.militaryTime;
 			  
 			hhmmss_meridian_military.timeChanged = true;
+			
+			hhmmss_meridian_military.changetimeDifference = a.changetimeDifference;
 		}
 	}
 }
@@ -73,8 +77,9 @@ class hhmmss_meridian_military
 	public static boolean military_ = false;
 	
 	public static boolean timeChanged = false;
+	
+	public static boolean changetimeDifference = false;
 }
-
 
 class WatchPanel extends JPanel implements Runnable {
 
@@ -85,6 +90,7 @@ class WatchPanel extends JPanel implements Runnable {
             runner = new Thread(this);
             runner.start();
         }
+        
     }
 
     public void run() {
@@ -97,6 +103,7 @@ class WatchPanel extends JPanel implements Runnable {
     }
     
     clock swingClock = new clock();
+    
     
     @Override
     public void paintComponent(Graphics g) 
@@ -114,7 +121,8 @@ class WatchPanel extends JPanel implements Runnable {
 	    	
 	    	swingClock.militaryTime = hhmmss_meridian_military.military_;
 	    	
-	    	swingClock.settimeDifference();
+	    	if(hhmmss_meridian_military.changetimeDifference)
+	    		swingClock.settimeDifference();
 	    	
 	    	hhmmss_meridian_military.timeChanged = false;
     	}

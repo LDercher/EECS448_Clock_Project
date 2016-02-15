@@ -1,7 +1,10 @@
-public class Main 
-{
-	public static void main(String []args)
+import java.awt.*;
+import javax.swing.*;
+
+public class Main {
+	
+	public static void main(String[] args)
 	{
-		clock _Clock = new clock();
+		printmenu a = new printmenu();
 	}
 }
