@@ -23,6 +23,7 @@ import org.joda.time.format.DateTimeFormatter;
 public class clock {
 	/**
 	 * Constructor method for main Clock class.
+	 * @throws InterruptedException, IOException
 	 */
 
 	public clock() {
@@ -173,7 +174,7 @@ public class clock {
 	}
 
 	/**
-	 * 
+	 * @pre 
 	 * @return boolean
 	 * @post Get method for 'seconds' variable
 	 */
@@ -182,7 +183,8 @@ public class clock {
 	}
 
 	/**
-	 * @return void Method created to design menu and receive input from user
+	 * @return void 
+	 * method created to design menu and receive input from user
 	 */
 	public void input() {
 		@SuppressWarnings("resource")
@@ -324,7 +326,10 @@ public class clock {
 		}
 	}
 
-	/** set AM or PM */
+	/** 
+	* @return void
+	* @post AM or PM is set
+	*/
 	public void AMorPM() {
 		Scanner input = new Scanner(System.in);
 		System.out.print("Insert AM or PM:");
@@ -347,11 +352,13 @@ public class clock {
 	 * specified time is calculated. This difference is used to find the user
 	 * specified time on each iteration.
 	 * 
+	 * @return void
 	 * @see http://kodejava.org/how-to-add-hours-minutes-seconds-into-datetime-in-joda-time/
-	 * @see http://stackoverflow.com/questions/20331163/how-to-format-joda-time-datetime -to-only-mm-dd-yyyy
+	 * @see http://stackoverflow.com/questions/20331163/how-to-format-joda-time-datetime-to-only-mm-dd-yyyy
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
+
 	private void initializeClock() throws InterruptedException, IOException {
 		settimeDifference();
 		readyFlag = true;
