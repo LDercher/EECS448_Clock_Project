@@ -58,8 +58,76 @@ public class calendar
 	private boolean mLeap;
 	
 	
-	public calendar(int aDay, MONTH aMonth, )
-	    public DAY_OF_WEEK dayOftheWeek(int aMonth, int aDay, int aYear, boolean aLeap)
+	public calendar(int aDay, MONTH aMonth, int aYear, int aLeap)
+	{
+		this.mDayOfMonth = aDay;
+		this.mMonth = new cMonth(aMonth, aLeap);
+		this.mLeap = aLeap;
+		this.mDayOfWeek = calcDayOfTheWeek(this.mMonth.mValue, aDay, aYear, aLeap);
+		this.mYear = aYear;
+	}
+	public int getDayOfMonth()
+	{
+		return(this.mDayOfMonth);
+	}
+	public DAY_OF_WEEK getDayOfWeek()
+	{
+		return(mDayOfWeek);
+	}
+	public MONTH getMonth()
+	{
+		return(mMonth.mName);
+	}
+	public int getMonthValue()
+	{
+		return(this.mMonth.mValue);
+	}
+	public int getMonthValue(MONTH aMonth)
+	{
+		return(aMonth.ordinal()+1);
+	}
+	public int getYear()
+	{
+		return(this.mYear);
+	}
+	public boolean getLeap()
+	{
+		return(this.mLeap);
+	}
+	public void incrementDay()
+	{
+		this.mDayOfMonth++;
+		if(this.mDayOfMonth > this.mMonth.mTotalDays)
+		{
+			this.mDayOfMonth = 1;
+			this.incrementMonth()
+		
+		}
+	}
+	private void incrementMonth()
+	{
+		private boolean lFlag = false;//flag to indicate it is the next month
+		for(MONTH iMonth: MONTH.values())
+		{
+			if(lFlag)
+			{
+				this.mMonth = new cMonth(iMonth, this.getLeap())
+				break;
+			}
+			if(iMonth == this.mMonth.mName)
+			{
+				lFlag = true
+				if(iMonth == December)
+				{
+					this.mYear++;
+					this.mMonth = new cMonth(January, this.getLeap())
+					break;
+				}
+					
+			}
+		}
+	}
+	    private DAY_OF_WEEK calcDayOfTheWeek(int aMonth, int aDay, int aYear, boolean aLeap)
 	    {
 	    	
 	    	double answer; //pre mod by 7
