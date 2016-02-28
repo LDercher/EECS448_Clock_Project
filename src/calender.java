@@ -1,9 +1,65 @@
 import static java.lang.System.*;
+
 public class calendar
 {
-public enum DAY_OF_WEEK {Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday }
 	
-	    public static DAY_OF_WEEK dayOftheWeek(int aMonth, int aDay, int aYear, boolean aLeap)
+	public enum DAY_OF_WEEK {Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday }
+	public enum MONTH{January,February,March,April,May,June,July,August,September,October,November,December}
+	
+	private class cMonth
+	{
+		public MONTH mName;
+		public int mValue;
+		public int mTotalDays;
+		
+		private cMonth(MONTH aName, boolean aLeap)
+		{
+			this.mName = aName;
+			this.mValue = aName.ordinal()+1;
+			switch(aName)
+			{
+				case January:
+				case March:
+				case May:
+				case July:
+				case August:
+				case October:
+				case December:
+					this.mTotalDays = 31;
+					break;
+				case April:
+				case June:
+				case September:
+				case November:
+					this.mTotalDays = 30;
+					break;
+				case February:
+					if(aLeap)
+					{
+						this.mTotalDays = 29;
+					}
+					else
+					{
+						this.mTotalDays = 28;
+					}
+					break;
+				
+					this.mTotalDays = 31;
+					break;
+				
+			}
+		}
+	}
+	
+	private int mDayOfMonth;
+	private DAY_OF_WEEK mDayOfWeek;
+	private int mYear;
+	private cMonth mMonth;
+	private boolean mLeap;
+	
+	
+	public calendar(int aDay, MONTH aMonth, )
+	    public DAY_OF_WEEK dayOftheWeek(int aMonth, int aDay, int aYear, boolean aLeap)
 	    {
 	    	
 	    	double answer; //pre mod by 7
@@ -132,12 +188,7 @@ public enum DAY_OF_WEEK {Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, S
 	    	
 	    	return lDay;	
 	    }
-	public static void main(String[] args)
-	{
-		DAY_OF_WEEK lDay = dayOftheWeek(2,24,2016,true);
-		out.println(lDay);
-	}
-	
+		
 }
 	    
 	    	
