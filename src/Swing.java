@@ -1,5 +1,11 @@
+package clock;
+
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * 
@@ -23,6 +29,7 @@ public class Swing extends JFrame {
 	private static final long serialVersionUID = 1L;
 	WatchPanel watch = new WatchPanel();
 	ConsoleMenu printMenu = new ConsoleMenu();
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Constructor for the 'Swing' class. Launches clock window, with clock
@@ -37,7 +44,7 @@ public class Swing extends JFrame {
 		
 		super("EECS448 - Clock Project");
 		
-		setSize(445, 160);
+		setSize(562, 454);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -46,6 +53,173 @@ public class Swing extends JFrame {
 		pane.setLayout(new GridLayout(1, 1, 15, 15));
 		
 		pane.add(watch);
+		
+		//LDercher created the buttons
+		
+		JButton hours_minus = new JButton("-");
+		hours_minus.addActionListener(new ActionListener() 
+		{ 
+		    public void actionPerformed(ActionEvent e) 
+		    { 
+		       // add function to decrement h
+		    } 
+		});
+		
+		JButton hours_plus = new JButton("+");
+		hours_plus.addActionListener(new ActionListener() 
+		{ 
+		    public void actionPerformed(ActionEvent e) 
+		    { 
+		       // add function to increment h
+		    } 
+		});
+		
+		hours_plus.setAlignmentX(150);
+		hours_plus.setAlignmentY(500);
+		
+		JButton minutes_plus = new JButton("+");
+		minutes_plus.addActionListener(new ActionListener() 
+		{ 
+		    public void actionPerformed(ActionEvent e) 
+		    { 
+		       // add function to increment m
+		    } 
+		});
+		
+		JButton minutes_minus = new JButton("-");
+		minutes_minus.addActionListener(new ActionListener() 
+		{ 
+		    public void actionPerformed(ActionEvent e) 
+		    { 
+		       // add function to decrement m
+		    } 
+		});
+		
+		JButton seconds_plus = new JButton("+");
+		seconds_plus.addActionListener(new ActionListener() 
+		{ 
+		    public void actionPerformed(ActionEvent e) 
+		    { 
+		       // add function to increment seconds
+		    } 
+		});
+		
+		JButton seconds_minus = new JButton("-");
+		seconds_minus.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				//add function to decrement seconds
+			}
+		});
+		
+		JButton twelveHR = new JButton("12 hr");
+		twelveHR.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				//add function to switch to 12hr mode
+			}
+		});
+		
+		JButton twentyFourHR = new JButton("24 hr");
+		twentyFourHR.addActionListener(new ActionListener() 
+		{	
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				//add function to switch to 24hr mode
+			}
+		});
+		
+		JButton btnTimer = new JButton("timer");
+		btnTimer.addActionListener(new ActionListener() 
+		{	
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				//add function to switch to timer mode
+			}
+		});
+		
+		JButton btnStopwatch = new JButton("stopwatch");
+		btnStopwatch.addActionListener(new ActionListener() 
+		{	
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				//add function to switch to stopwatch mode
+			}
+		});
+		
+		JButton btnStartpause = new JButton("start/pause");
+		btnStartpause.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+			  //add function to start/stop stopwatch
+			}
+		});
+		buttonGroup.add(btnStartpause);
+	
+		
+		JButton btnReset = new JButton("reset");
+		GroupLayout groupLayout = new GroupLayout(watch);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(115)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(hours_minus)
+								.addComponent(hours_plus))
+							.addGap(34)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(minutes_plus)
+								.addComponent(minutes_minus))
+							.addGap(31)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(seconds_minus)
+								.addComponent(seconds_plus)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(twelveHR)
+								.addComponent(btnTimer)
+								.addComponent(btnStartpause))
+							.addGap(66)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnReset)
+								.addComponent(btnStopwatch)
+								.addComponent(twentyFourHR))))
+					.addGap(145))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(34)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(seconds_plus)
+						.addComponent(minutes_plus)
+						.addComponent(hours_plus))
+					.addGap(57)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(seconds_minus)
+						.addComponent(minutes_minus)
+						.addComponent(hours_minus))
+					.addGap(43)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(twelveHR)
+						.addComponent(twentyFourHR))
+					.addGap(45)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnTimer)
+						.addComponent(btnStopwatch))
+					.addPreferredGap(ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnStartpause)
+						.addComponent(btnReset))
+					.addGap(34))
+		);
+		watch.setLayout(groupLayout);
+
 		
 		setContentPane(pane);
 		
@@ -91,7 +265,7 @@ class ConsoleMenu implements Runnable {
 	 * @return void
 	 */
 	public void run() {
-		clock a = new clock(1, hhmmss_meridian_military.hh_,
+		Clock a = new Clock(1, hhmmss_meridian_military.hh_,
 				hhmmss_meridian_military.mm_, hhmmss_meridian_military.ss_);
 		while (true) {
 
@@ -166,7 +340,7 @@ class WatchPanel extends JPanel implements Runnable {
 		}
 	}
 
-	clock swingClock = new clock(); // initializes swingClock object of type
+	Clock swingClock = new Clock(); // initializes swingClock object of type
 									// 'clock' used in the 'paintComponent'
 									// method
 
@@ -212,7 +386,7 @@ class WatchPanel extends JPanel implements Runnable {
 			
 			g.setColor(Color.black);
 			
-			g.drawString(time, 65, 66);			
+			g.drawString(time, 100, 100);			
 
 		}
 
