@@ -1,6 +1,6 @@
-import static java.lang.System.*;
+package test;
 
-public class calendar
+public class Calendar
 {
 	
 	public enum DAY_OF_WEEK {Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday }
@@ -44,8 +44,6 @@ public class calendar
 					}
 					break;
 				
-					this.mTotalDays = 31;
-					break;
 				
 			}
 		}
@@ -58,7 +56,7 @@ public class calendar
 	private boolean mLeap;
 	
 	
-	public calendar(int aDay, MONTH aMonth, int aYear, int aLeap)
+	public Calendar(int aDay, MONTH aMonth, int aYear, boolean aLeap)
 	{
 		this.mDayOfMonth = aDay;
 		this.mMonth = new cMonth(aMonth, aLeap);
@@ -100,27 +98,29 @@ public class calendar
 		if(this.mDayOfMonth > this.mMonth.mTotalDays)
 		{
 			this.mDayOfMonth = 1;
-			this.incrementMonth()
+			this.incrementMonth();
 		
 		}
+		this.mDayOfWeek = this.calcDayOfTheWeek(this.mMonth.mValue, this.mDayOfMonth, this.mYear, this.mLeap);
 	}
+	
 	private void incrementMonth()
 	{
-		private boolean lFlag = false;//flag to indicate it is the next month
+		boolean lFlag = false;//flag to indicate it is the next month
 		for(MONTH iMonth: MONTH.values())
 		{
 			if(lFlag)
 			{
-				this.mMonth = new cMonth(iMonth, this.getLeap())
+				this.mMonth = new cMonth(iMonth, this.getLeap());
 				break;
 			}
 			if(iMonth == this.mMonth.mName)
 			{
-				lFlag = true
-				if(iMonth == December)
+				lFlag = true;
+				if(iMonth == MONTH.December)
 				{
 					this.mYear++;
-					this.mMonth = new cMonth(January, this.getLeap())
+					this.mMonth = new cMonth(MONTH.January, this.getLeap());
 					break;
 				}
 					
@@ -135,10 +135,8 @@ public class calendar
 	    	double NewYear;
 	    	double lNewMonth = 0;//mod aMonths and year
 	    	double century;
-	    	int i=0;
-	    	char leapYear; // is leap year
-	    	char repeat = 'y';
 	    	
+	    		    	
 	    	DAY_OF_WEEK lDay;
 	    	
     		switch(aMonth)
@@ -258,7 +256,3 @@ public class calendar
 	    }
 		
 }
-	    
-	    	
-	    	
-	    
