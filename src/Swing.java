@@ -1,221 +1,209 @@
-//sri working on this
-import java.awt.*;
+//AUTHOR: SRI GAYATRI
+
+//importing libraries
+import java.awt.event.*;
+
 import javax.swing.*;
 
-/**
- * 
- * @author Victor Berger, Jesse Yang, Jeromy Tsai, and Cammy Vo
- * EECS 448 - Clock Project
- * prof: John Gibbons
- * code freeze: February 14th, 2016 11:59 PM
- * 
- */
+import java.awt.*;
 
-/**
- * @param Class
- *            'Swing' is used to generate and control the Java Swing Set
- *            functionality of the program.
- * 
- */
-public class Swing extends JFrame {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	WatchPanel watch = new WatchPanel();
-	ConsoleMenu printMenu = new ConsoleMenu();
-
-	/**
-	 * Constructor for the 'Swing' class. Launches clock window, with clock
-	 * originally set at 12:00:00 AM. Will run for entire duration of program.
-	 * Includes many simple Java Swing Set look&feel commands.
-	 * 
-	 * @pre -
-	 * @post -
-	 * 
-	 */
-	public Swing() {
-		
-		super("EECS448 - Clock Project");
-		
-		setSize(445, 160);
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		JPanel pane = new JPanel();
-		
-		pane.setLayout(new GridLayout(1, 1, 15, 15));
-		
-		pane.add(watch);
-		
-		setContentPane(pane);
-		
-		setVisible(true);
-	}
-
-	/**
-	 * Main method. Initializes 'clock' object used to run the clock counter
-	 * 
-	 */
-	public static void main(String[] arguments) {
-		@SuppressWarnings("unused")
-		Swing clock = new Swing();
-	}
-}
-
-/**
- * 
- * Class 'ConsoleMenu' implements the thread used to have the console menu
- * continually running and able to accept real-time input.
- *
- * All classes that implement the 'Runnable' interface were based on:
- * @see http://workbench.cadenhead.org/book/21java/source/day13/DigitalClock.java
- *
- */
-class ConsoleMenu implements Runnable {
-	Thread runner;
-	int test = 0;
-
-	ConsoleMenu() {
-		if (runner == null) {
-			runner = new Thread(this);
-			runner.start();
-		}
-	}
-
-	/**
-	 * Continuously takes clock input from user and makes the necessary changes on time set
-	 * and format
-	 * 
-	 * @pre continuously called by thread
-	 * @post time set and format get updated
-	 * @return void
-	 */
-	public void run() {
-		clock a = new clock(1, hhmmss_meridian_military.hh_,
-				hhmmss_meridian_military.mm_, hhmmss_meridian_military.ss_);
-		while (true) {
-
-			a.input();
-
-			hhmmss_meridian_military.hh_ = a.hh;
-			hhmmss_meridian_military.mm_ = a.mm;
-			hhmmss_meridian_military.ss_ = a.ss;
-
-			if (a.AM_or_PM.equals("PM"))
-				hhmmss_meridian_military.AM_or_PM_ = true;
-			else
-				hhmmss_meridian_military.AM_or_PM_ = false;
-
-			hhmmss_meridian_military.military_ = a.militaryTime;
-
-			hhmmss_meridian_military.timeChanged = true;
-
-			hhmmss_meridian_military.changetimeDifference = a.changetimeDifference;
-		}
-	}
-}
-
-/**
- * The 'hhmmss_meridian_military' class is used to communicate between
- * ConsoleMenu thread and the WatchPanel thread ConsoleMenu takes input from the
- * user to specify hh, mm, ss, AM or PM, or military time Those specified values
- * are set in this class by ContinuosMenu which are then pulled from by
- * WatchPanel. WatchPanel pulls the values then sets them into the clock.
- */
-
-class hhmmss_meridian_military {
-	public static int hh_ = 0;
-	public static int mm_ = 0;
-	public static int ss_ = 0;
-	public static boolean AM_or_PM_ = false; // AM == false, PM == true
-	public static boolean military_ = false;
-	public static boolean timeChanged = false;
-	public static boolean changetimeDifference = false;
-}
-
-/**
- * The "WatchPanel" class implements 'thread runner' to set the time values into the clock
- * 
- * Based on:
- * @see http://workbench.cadenhead.org/book/21java/source/day13/DigitalClock.java * 
- */
-class WatchPanel extends JPanel implements Runnable {
-
-	private static final long serialVersionUID = 1L;
-	Thread runner;
-
-	WatchPanel() {
-		if (runner == null) {
-			runner = new Thread(this);
-			runner.start();
-		}
-
-	}
-
-	/**
-	* @post implements while(true) loop that generates thread
-	* @return void
+//just named it swing for now
+public class Swing extends JPanel
+{
+	//declare frame and panel variables
+	JFrame frame;
+	JPanel panel1, panel2, panel3;
+	JLabel label,time;
+	JButton start,stop,reset;
+	
+	//delcare stopwatch variables
+	int ticks;  	//number of clock ticks; tick can be 1.0 s or 0.1 s
+	double time_in_sec;  	//time in seconds
+	String time_string;
+	Font myfont;
+	Timer stopwatch;
+	
+	/*
+	long startTime;
+	int ms,s,m,h;
+	boolean isRunning;
+	ms=00;
+	s=00;
+	m=00;
+	h=00;
+	isRunning = false;
 	*/
-	public void run() {
-		while (true) {
-			repaint();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-			}
-		}
-	}
-
-	clock swingClock = new clock(); // initializes swingClock object of type
-									// 'clock' used in the 'paintComponent'
-									// method
-
-	/**
-	 * @pre called by the swing window constructor
-	 * @return void
-	 * @post sets 'paint' configurations of swing window, including parameters such as
-	 * color and font. Receives time parameter and updates the swing window.
-	 */
-	@Override
-	public void paintComponent(Graphics g) {
-		if (hhmmss_meridian_military.timeChanged) {
-			swingClock.sethh(hhmmss_meridian_military.hh_);
-			swingClock.setmm(hhmmss_meridian_military.mm_);
-			swingClock.setss(hhmmss_meridian_military.ss_);
-
-			if (hhmmss_meridian_military.AM_or_PM_ == true)
-				swingClock.AM_or_PM = "PM";
-			else
-				swingClock.AM_or_PM = "AM";
-
-			swingClock.militaryTime = hhmmss_meridian_military.military_;
-
-			if (hhmmss_meridian_military.changetimeDifference)
-				swingClock.settimeDifference();
-
-			hhmmss_meridian_military.timeChanged = false;
-		}
-
-		Font myFont = new Font("Georgia", Font.BOLD, 46);
+	
+	public Swing()
+	{
+		ticks = 0;  		//initial clock setting in ticks
+		time_in_sec = ((double)ticks)/10.0;
+		time_string = new Double(time_in_sec).toString();
 		
-		g.setFont(myFont);
+		myfont = new Font("Serif", Font.PLAIN, 50);
 		
-		if (swingClock.getReadyFlag()) 
+		//Creating buttons
+		start=new JButton("Start");
+		stop=new JButton("Stop");
+		reset=new JButton("Reset");
+		
+		//setting the label
+		time = new JLabel();
+		time.setFont(myfont);
+		time.setText(time_string);
+		
+		stopwatch = new Timer(100, new ActionListener() 
 		{
-			g.setColor(getBackground());
-			
-			g.fillRect(0, 0, getSize().width, getSize().height);
-			
-			swingClock.setTime();
-			
-			String time = swingClock.getTime();
-			
-			g.setColor(Color.black);
-			
-			g.drawString(time, 65, 66);			
+			public void actionPerformed(ActionEvent evt) 
+			{
+				ticks++;
+				time_in_sec = ((double)ticks)/10.0;
+				time_string = new Double(time_in_sec).toString();
+				time.setText(time_string);
+			    }
+			});
 
-		}
+		
+		start.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent evt)
+			{
+				
+				/*isRunning = true;
+				while (true)
+				{
+			        startTime = System.nanoTime();
+			        while (isRunning) 
+			        {
+			            if (System.nanoTime() - startTime >= 10000000) 
+			            {
+			                startTime = System.nanoTime();
+			                ms++;
+			                if (ms == 100) 
+			                {
+			                    s++;
+			                    ms = 0;
+			                    if (s == 60) 
+			                    {
+			                        m++;
+			                        s = 0;
+			                        if (m == 60) 
+			                        {
+			                            h++;
+			                            m = 0;
+			                        }
+			                    }
+			                }
+			                
+			                time.setText(h+" : "+m+" : "+s+" : "+ms);
+			                
+			            }
+			        }
+				}*/
+				stopwatch.start();
+				
+			}
+		});
+		
+		
+		stop.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent evt)
+			{
+				 //isRunning = false;
+				stopwatch.stop();
+			}
+		});
 
+		reset.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent evt)
+			{
+				/* ms = 0;
+			     s = 0;
+			     m = 0;
+			     h = 0;
+				time.setText(h+" : "+m+" : "+s+" : "+ms);*/
+				ticks = 0;
+				time_in_sec = ((double)ticks)/10.0;
+				time_string = new Double(time_in_sec).toString();
+				time.setText(time_string);
+			}
+		});
+		
+	}//constructor ends here
+/*public void run()
+{
+	while (true)
+	{
+        startTime = System.nanoTime();
+        while (isRunning) 
+        {
+            if (System.nanoTime() - startTime >= 10000000) 
+            {
+                startTime = System.nanoTime();
+                ms++;
+                if (ms == 100) 
+                {
+                    s++;
+                    ms = 0;
+                    if (s == 60) 
+                    {
+                        m++;
+                        s = 0;
+                        if (m == 60) 
+                        {
+                            h++;
+                            m = 0;
+                        }
+                    }
+                }
+                
+                time.setText(h+" : "+m+" : "+s+" : "+ms);
+                
+            }
+        }
 	}
-}
+}*/
+	public void myFrame()
+	{
+		
+		//created frame and set dimension
+		frame=new JFrame("Stopwatch");
+		frame.setVisible(true);
+		frame.setSize(445, 160);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//created 3 panels and set backgrounds
+		panel1= new JPanel();
+		panel2= new JPanel();
+		panel3= new JPanel();
+		panel1.setBackground(Color.yellow);
+		panel3.setBackground(Color.green);
+		
+		//positioned the panels in frame
+		frame.add(panel1,BorderLayout.NORTH);
+		frame.add(panel2,BorderLayout.CENTER);
+		frame.add(panel3,BorderLayout.SOUTH);
+		
+		//adding to panel1
+		label = new JLabel("EECS 448 StopWatch");
+		panel1.add(label);
+		
+		//adding to panel2
+		panel2.add(time);
+	
+		//adding to panel3
+		panel3.add(start);
+		panel3.add(stop);
+		panel3.add(reset);
+	}	
+	
+	public static void main(String[] args)
+	{
+		Swing myStopWatch;
+		myStopWatch = new Swing();
+		myStopWatch.myFrame();
+	}
+	
+}//class swing ends here
