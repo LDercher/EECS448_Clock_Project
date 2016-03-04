@@ -1,3 +1,4 @@
+
 //AUTHOR: SRI GAYATRI
 
 //importing libraries
@@ -18,6 +19,8 @@ public class Swing extends JPanel
 	
 	//delcare stopwatch variables
 	int ticks;  	//number of clock ticks; tick can be 1.0 s or 0.1 s
+	int min;
+	int sec;
 	double time_in_sec;  	//time in seconds
 	String time_string;
 	Font myfont;
@@ -36,6 +39,8 @@ public class Swing extends JPanel
 	
 	public Swing()
 	{
+		min=0;
+		sec=0;
 		ticks = 0;  		//initial clock setting in ticks
 		time_in_sec = ((double)ticks)/10.0;
 		time_string = new Double(time_in_sec).toString();
@@ -44,7 +49,7 @@ public class Swing extends JPanel
 		
 		//Creating buttons
 		start=new JButton("Start");
-		stop=new JButton("Stop");
+		stop=new JButton("Pause");
 		reset=new JButton("Reset");
 		
 		//setting the label
@@ -59,8 +64,21 @@ public class Swing extends JPanel
 				ticks++;
 				time_in_sec = ((double)ticks)/10.0;
 				time_string = new Double(time_in_sec).toString();
-				time.setText(time_string);
-			    }
+				time.setText(min + " : "+ sec + " : " + ticks);
+				if(ticks==9)
+				{
+					ticks=0;
+					sec++;
+					time.setText(min + " : "+ sec + " : " + ticks);
+				}
+				if(time_in_sec==60.0)
+				{
+					min++;
+					ticks=0;
+					time_in_sec = ((double)ticks)/10.0;
+					time.setText(min + " : "+ sec + " : " + ticks);
+				}
+			 }
 			});
 
 		
@@ -124,10 +142,25 @@ public class Swing extends JPanel
 			     m = 0;
 			     h = 0;
 				time.setText(h+" : "+m+" : "+s+" : "+ms);*/
-				ticks = 0;
+				ticks=0;
+				min=0;
+				sec=0;
 				time_in_sec = ((double)ticks)/10.0;
 				time_string = new Double(time_in_sec).toString();
-				time.setText(time_string);
+				time.setText(min + " : "+ sec + " : " + ticks);
+				/*if(ticks==10)
+				{
+					ticks=0;
+					sec++;
+					time.setText(min + ":"+ sec + ":" + ticks);
+				}
+				if(time_in_sec==60.0)
+				{
+					min++;
+					ticks=0;
+					time_in_sec = ((double)ticks)/10.0;
+					time.setText(min + ":"+ sec + ":" + ticks);
+				}*/
 			}
 		});
 		
@@ -207,3 +240,5 @@ public class Swing extends JPanel
 	}
 	
 }//class swing ends here
+
+
