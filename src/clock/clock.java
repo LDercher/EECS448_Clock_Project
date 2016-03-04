@@ -79,7 +79,6 @@ public class clock {
 	/** @return timeString */
 	public String getTime() 
 	{
-		
 		this.timeString = String.format("%02d:%02d:%02d", this.hh, this.mm, this.ss);
 		return timeString;
 	}
