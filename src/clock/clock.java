@@ -79,7 +79,8 @@ public class clock {
 	/** @return timeString */
 	public String getTime() 
 	{
-		this.timeString = this.hh + ":" + this.mm+ ":" + this.ss;
+		
+		this.timeString = String.format("%02d:%02d:%02d", this.hh, this.mm, this.ss);
 		return timeString;
 	}
 
@@ -112,15 +113,32 @@ public class clock {
 	 * @param hh
 	 * @return void Set method for 'hours' variable
 	 */
-	public void sethh(int hh) {
-		this.hh = hh;
+	public void sethh(int hh)
+	{
+		int lMaxHour = 12;
+		int lMinHour = 1;
+		if(this.militaryTime)
+		{
+			lMaxHour = 23;
+			lMinHour = 0;
+		}
+		if(hh > lMaxHour)
+		{
+			this.hh = lMinHour;
+		}
+		else
+		{
+			this.hh = hh;
+		}
 	}
 
 	/**
 	 * @return int (hh)
 	 * @post Get method for 'hours' variable
 	 */
-	public int gethh() {
+	public int gethh() 
+	{
+		
 		return hh;
 	}
 
@@ -128,8 +146,17 @@ public class clock {
 	 * @param mm
 	 * @return void Set method for 'minutes' variable
 	 */
-	public void setmm(int mm) {
-		this.mm = mm;
+	public void setmm(int mm)
+	{
+		if(mm==60)
+		{
+			this.mm=0;
+			this.sethh(this.gethh()+1);
+		}
+		else
+		{
+			this.mm = mm;
+		}
 	}
 
 	/**

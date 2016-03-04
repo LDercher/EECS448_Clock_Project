@@ -371,6 +371,8 @@ class WatchPanel extends JPanel implements Runnable {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
+		
+		/*
 		if (hhmmss_meridian_military.timeChanged) {
 			//swingClock.setReadyFlag(true);
 			
@@ -391,7 +393,7 @@ class WatchPanel extends JPanel implements Runnable {
 
 			hhmmss_meridian_military.timeChanged = false;
 		}
-
+		*/
 		Font myFont = new Font("Georgia", Font.BOLD, 46);
 		
 		g.setFont(myFont);
