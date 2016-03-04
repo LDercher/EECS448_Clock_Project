@@ -1,5 +1,8 @@
+package clock;
+
 import java.io.IOException;
 import java.util.Scanner;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -74,7 +77,9 @@ public class clock {
 	boolean changetimeDifference = false;
 
 	/** @return timeString */
-	public String getTime() {
+	public String getTime() 
+	{
+		this.timeString = this.hh + ":" + this.mm+ ":" + this.ss;
 		return timeString;
 	}
 
@@ -88,6 +93,7 @@ public class clock {
 		DateTimeFormatter dtf = DateTimeFormat
 				.forPattern("mm/dd/yyyy hh:mm:ss a");
 		/** Parsing the date */
+		
 		DateTime jodatime = dtf.parseDateTime(dtf.print(DateTime.now()
 				.plusMillis(timeDifference)));
 		/** Format for output */
@@ -138,8 +144,18 @@ public class clock {
 	 * @param ss
 	 * @return void Set method for 'seconds' variable
 	 */
-	public void setss(int ss) {
-		this.ss = ss;
+	public void setss(int ss) 
+	{
+		if(ss==60)
+		{
+			this.ss = 0;
+			this.setmm(this.getmm()+1);
+		}
+		else
+		{
+			this.ss = ss;
+		}
+		
 	}
 
 	/**
@@ -149,6 +165,11 @@ public class clock {
 	public int getss() {
 		return ss;
 	}
+	
+	public void setReadyFlag(boolean aFlag)
+	{
+		this.readyFlag = aFlag;
+	}
 
 	/**
 	 * Convert hh to 24 hour equivalent; used to calculate the milliseconds of
@@ -156,20 +177,21 @@ public class clock {
 	 */
 	public void settimeDifference() {
 
-		int HH = hh;
+		
+		System.out.println("The clocks hours: "+this.hh);
 		/**
 		 * if PM, add 12 hours except if it's 12 PM else-if: if 12 AM, it's 0
 		 * hours from midnight
 		 */
-		if (AM_or_PM.equals("PM") && HH != 12) {
-			HH += 12;
+		if (AM_or_PM.equals("PM") && hh != 12) {
+			hh += 12;
 
-		} else if (AM_or_PM.equals("AM") && HH == 12) {
-			HH = 0;
+		} else if (AM_or_PM.equals("AM") && hh == 12) {
+			hh = 0;
 		}
 
 		// to calculate time difference between present time and input time
-		timeDifference = (HH * 3600 + mm * 60 + ss) * 1000
+		timeDifference = (hh * 3600 + mm * 60 + ss) * 1000
 				- DateTime.now().getMillisOfDay();
 	}
 
