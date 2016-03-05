@@ -270,6 +270,9 @@ class WatchPanel extends JPanel implements Runnable {
 				{	
 					public void actionPerformed(ActionEvent arg0) 
 					{
+						StopWatch myStopWatch;
+						myStopWatch = new StopWatch();
+						myStopWatch.myFrame();
 						//add function to switch to stopwatch mode
 					}
 				});
