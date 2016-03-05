@@ -14,11 +14,7 @@ import java.text.NumberFormat;
 import javax.swing.*;
 
 import java.text.NumberFormat;
-class TimerFrame extends JFrame implements ActionListener
- *Implements JFrame components
- *
- *
- */
+
 class TimerFrame extends JFrame implements ActionListener
 {Timer timer;
 AudioClip sound; 
@@ -245,7 +241,7 @@ public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
 	
 }
-  
+}  
  
-}
+
 
