@@ -223,6 +223,7 @@ class WatchPanel extends JPanel implements Runnable {
 				    public void actionPerformed(ActionEvent e) 
 				    { 
 				       // add function to increment seconds
+				    	swingClock.setss(swingClock.getss()+1);
 				    } 
 				});
 				
@@ -232,6 +233,7 @@ class WatchPanel extends JPanel implements Runnable {
 					public void actionPerformed(ActionEvent arg0) 
 					{
 						//add function to decrement seconds
+						swingClock.setss(swingClock.getss()-1);
 					}
 				});
 				
