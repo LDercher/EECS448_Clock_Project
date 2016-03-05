@@ -19,7 +19,7 @@ import java.text.NumberFormat;
  *
  *
  */
-class Frame extends JFrame implements ActionListener
+class TimerFrame extends JFrame implements ActionListener
 {Timer timer;
 AudioClip sound; 
 //Reference to Buttons
@@ -46,7 +46,7 @@ JButton hour_up ;
   long lastUpdate;
 
 
-  Frame(String title) 
+  TimerFrame(String title) 
   {
     super( title );                 
     getContentPane().setBackground(Color.WHITE);
@@ -249,13 +249,4 @@ public void actionPerformed(ActionEvent e) {
  
 }
 
-public class Countdown
-{
-  public static void main ( String[] args )
-  {
-    Frame frm = new Frame("Timer");
 
-    frm.setSize( 200, 100 );     
-    frm.setVisible( true );   
-  }
-}
