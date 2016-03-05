@@ -82,6 +82,15 @@ public class Calendar
 	{
 		return(this.mDayOfMonth);
 	}
+	
+	/**
+	 * 
+	 * @param aDay an int to set the day.
+	 */
+	public void setDayOfMonth(int aDay)
+	{
+		this.mDayOfMonth = aDay;
+	}
 	/**
 	 * 
 	 * @return the day of the week i.e. Monday
@@ -99,6 +108,16 @@ public class Calendar
 		return(mMonth.mName);
 	}
 	
+	/**
+	 * 
+	 * @param aMonth the name of the month to set the calendar to.
+	 */
+	public void setMonth(MONTH aMonth)
+	{
+		cMonth lDummyMonth = new cMonth(aMonth, this.getLeap());
+		this.mMonth = lDummyMonth;
+		
+	}
 	/**
 	 * 
 	 * @return the ordinality of the month. e.g. December would return 12
@@ -125,6 +144,15 @@ public class Calendar
 	public int getYear()
 	{
 		return(this.mYear);
+	}
+	
+	/**
+	 * 
+	 * @param aYear the year to set the value to.
+	 */
+	public void setYear(int aYear)
+	{
+		this.mYear = aYear;
 	}
 	
 	/**
