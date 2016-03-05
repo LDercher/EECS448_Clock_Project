@@ -196,7 +196,7 @@ JButton hour_up ;
 	  m_min.setText("		"+minute);
 	  m_sec.setText("		"+sec);
 	  m_timer.setText(format.format(hour) + ":" +format.format(minute) + ":" + format.format(sec));
-	  remain =hour*3600000+minute * 60000 + sec*1000;
+	  remain =hour*3600000+minute * 60000 + sec*1000+2000;//add 2000 for initial delay of 2 seconds;
    }
   
   /**
@@ -206,6 +206,7 @@ JButton hour_up ;
   public void start() {
 	  
 	  lastUpdate = System.currentTimeMillis();
+	    timer.setInitialDelay(2000);
 	  timer.start(); // Start the timer
   } 
 /**
