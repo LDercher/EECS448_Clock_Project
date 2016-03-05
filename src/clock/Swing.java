@@ -260,7 +260,9 @@ class WatchPanel extends JPanel implements Runnable {
 				{	
 					public void actionPerformed(ActionEvent arg0) 
 					{
-						
+						TimerFrame frm = new TimerFrame("Timer");
+					    frm.setSize( 400, 200 );     
+					    frm.setVisible( true ); 
 						//add function to switch to timer mode
 					}
 				});
