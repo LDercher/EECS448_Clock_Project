@@ -1,3 +1,8 @@
+/**
+ * Author:Dylan Egnoske
+ * 
+ */
+
 package clock;
 
 import java.applet.AudioClip;
@@ -5,9 +10,15 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.NumberFormat;
 
+
 import javax.swing.*;
 
 import java.text.NumberFormat;
+/**
+ *Implements JFrame components
+ *
+ *
+ */
 class Frame extends JFrame implements ActionListener
 {Timer timer;
 AudioClip sound; 
@@ -38,6 +49,7 @@ JButton hour_up ;
   Frame(String title) 
   {
     super( title );                 
+    getContentPane().setBackground(Color.WHITE);
     setLayout( new GridLayout(0, 3) );    // set the layout Grid
     format = NumberFormat.getNumberInstance();
     format.setMinimumIntegerDigits(2);
@@ -92,6 +104,7 @@ JButton hour_up ;
     		  hour=0;
     		  minute=0;
     		  sec=0;
+    		  getContentPane().setBackground(Color.WHITE);
     		  timer.stop();
     		  updateDisplay();
     	      repaint();  // ask the system to paint the screen.
@@ -151,7 +164,7 @@ JButton hour_up ;
     set_time.addActionListener( new ActionListener(){
     	public void actionPerformed(ActionEvent evt){
     		 start();
-    		
+    		 getContentPane().setBackground(Color.WHITE);
     	      repaint();  // ask the system to paint the screen.
     	  
     	}
@@ -179,7 +192,9 @@ JButton hour_up ;
  
  
   
-  //update Display
+  /**
+   * update display and format output text
+   */
   void updateDisplay(){
 	  m_hour.setText("		"+hour);;
 	  m_min.setText("		"+minute);
@@ -193,6 +208,7 @@ JButton hour_up ;
    */
   
   public void start() {
+	  
 	  lastUpdate = System.currentTimeMillis();
 	  timer.start(); // Start the timer
   } 
@@ -201,8 +217,6 @@ JButton hour_up ;
  */
 void updateclock(){ 
 	
-    
-
 	long now = System.currentTimeMillis(); // current time in ms
     long elapsed = now - lastUpdate; // ms elapsed since last update
     remain -= elapsed; // adjust remain time
@@ -216,11 +230,11 @@ void updateclock(){
     int seconds = (int) ((remain % 60000) / 1000);
     m_timer.setText(format.format(hours) + ":"+format.format(minutes) + ":" + format.format(seconds));
 
-    // If we've completed the countdown beep and display new page
+// source:http://stackoverflow.com/questions/26305/how-can-i-play-sound-in-java
     if (remain == 0) {
-    	//alarm sound
-    	
-      // Stop updating now.
+    	getContentPane().setBackground(Color.RED);
+    	m_timer.setFont(new Font("Serif", Font.BOLD, 20));
+    	m_timer.setText("Timer Done!");
       timer.stop();
       }
 	
