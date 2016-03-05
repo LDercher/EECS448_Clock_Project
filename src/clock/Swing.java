@@ -1,7 +1,7 @@
 package clock;
 
 import java.awt.*;
-
+import clock.Calendar.*;
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -155,6 +155,7 @@ class WatchPanel extends JPanel implements Runnable {
 	Thread runner;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
+	Calendar lCalendar = new Calendar(1, MONTH.January, 2016);
 	clock swingClock = new clock(); // initializes swingClock object of type
 	// 'clock' used in the 'paintComponent'
 	// method
@@ -423,9 +424,16 @@ class WatchPanel extends JPanel implements Runnable {
 				time = time + " " + swingClock.getAmPm().toString();
 			}
 			
+			if(swingClock.mNextDayFlag)
+			{
+				lCalendar.incrementDay();
+				swingClock.mNextDayFlag = false;
+			}
 			g.setColor(Color.black);
 			
-			g.drawString(time, 100, 100);			
+			g.drawString(time, 100, 100);	
+
+			
 
 		}
 
