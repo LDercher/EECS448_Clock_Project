@@ -1,3 +1,4 @@
+package src2;
 
 //AUTHOR: SRI GAYATRI
 
@@ -9,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 
 //just named it swing for now
-public class Swing extends JPanel
+public class StopWatch extends JPanel
 {
 	//declare frame and panel variables
 	JFrame frame;
