@@ -1,5 +1,9 @@
 
-//AUTHOR: SRI GAYATRI
+/*
+** EECS 448 Project #2
+** Authors: Sri Gayatri Sundar
+** Last update: March 5, 2016.
+*/
 
 //importing libraries
 import java.awt.event.*;
@@ -8,8 +12,7 @@ import javax.swing.*;
 
 import java.awt.*;
 
-//just named it swing for now
-public class Swing extends JPanel
+public class StopWatch extends JPanel
 {
 	//declare frame and panel variables
 	JFrame frame;
@@ -17,33 +20,23 @@ public class Swing extends JPanel
 	JLabel label,time;
 	JButton start,stop,reset;
 	
-	//delcare stopwatch variables
-	int ticks;  	//number of clock ticks; tick can be 1.0 s or 0.1 s
+	//stopwatch variables
+	int ticks;  	//number of clock ticks
 	int min;
 	int sec;
-	double time_in_sec;  	//time in seconds
-	String time_string;
+	double time_in_sec;  	//ticks is incremented every milli second and is divided by 10 to give a decimal number. this decimal is the seconds passed after start
+	
 	Font myfont;
-	Timer stopwatch;
+	Timer stopwatch; //instance of timer class
 	
-	/*
-	long startTime;
-	int ms,s,m,h;
-	boolean isRunning;
-	ms=00;
-	s=00;
-	m=00;
-	h=00;
-	isRunning = false;
-	*/
+
 	
-	public Swing()
+	public StopWatch()
 	{
 		min=0;
 		sec=0;
 		ticks = 0;  		//initial clock setting in ticks
 		time_in_sec = ((double)ticks)/10.0;
-		time_string = new Double(time_in_sec).toString();
 		
 		myfont = new Font("Serif", Font.PLAIN, 50);
 		
@@ -55,22 +48,26 @@ public class Swing extends JPanel
 		//setting the label
 		time = new JLabel();
 		time.setFont(myfont);
-		time.setText(time_string);
+		time.setText(min + " : "+ sec + " : " + ticks);
 		
+		//action listener
 		stopwatch = new Timer(100, new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent evt) 
 			{
 				ticks++;
 				time_in_sec = ((double)ticks)/10.0;
-				time_string = new Double(time_in_sec).toString();
 				time.setText(min + " : "+ sec + " : " + ticks);
+				
+				//incrementing seconds
 				if(ticks==9)
 				{
 					ticks=0;
 					sec++;
 					time.setText(min + " : "+ sec + " : " + ticks);
 				}
+				
+				//incrementing minutes
 				if(time_in_sec==60.0)
 				{
 					min++;
@@ -81,138 +78,57 @@ public class Swing extends JPanel
 			 }
 			});
 
-		
+		//Start Button
 		start.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent evt)
 			{
-				
-				/*isRunning = true;
-				while (true)
-				{
-			        startTime = System.nanoTime();
-			        while (isRunning) 
-			        {
-			            if (System.nanoTime() - startTime >= 10000000) 
-			            {
-			                startTime = System.nanoTime();
-			                ms++;
-			                if (ms == 100) 
-			                {
-			                    s++;
-			                    ms = 0;
-			                    if (s == 60) 
-			                    {
-			                        m++;
-			                        s = 0;
-			                        if (m == 60) 
-			                        {
-			                            h++;
-			                            m = 0;
-			                        }
-			                    }
-			                }
-			                
-			                time.setText(h+" : "+m+" : "+s+" : "+ms);
-			                
-			            }
-			        }
-				}*/
 				stopwatch.start();
 				
 			}
 		});
 		
-		
+		//Stop Button
 		stop.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent evt)
 			{
-				 //isRunning = false;
 				stopwatch.stop();
 			}
 		});
-
+		
+		//Reset button
 		reset.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent evt)
 			{
-				/* ms = 0;
-			     s = 0;
-			     m = 0;
-			     h = 0;
-				time.setText(h+" : "+m+" : "+s+" : "+ms);*/
 				ticks=0;
 				min=0;
 				sec=0;
 				time_in_sec = ((double)ticks)/10.0;
-				time_string = new Double(time_in_sec).toString();
 				time.setText(min + " : "+ sec + " : " + ticks);
-				/*if(ticks==10)
-				{
-					ticks=0;
-					sec++;
-					time.setText(min + ":"+ sec + ":" + ticks);
-				}
-				if(time_in_sec==60.0)
-				{
-					min++;
-					ticks=0;
-					time_in_sec = ((double)ticks)/10.0;
-					time.setText(min + ":"+ sec + ":" + ticks);
-				}*/
+				
 			}
 		});
 		
 	}//constructor ends here
-/*public void run()
-{
-	while (true)
-	{
-        startTime = System.nanoTime();
-        while (isRunning) 
-        {
-            if (System.nanoTime() - startTime >= 10000000) 
-            {
-                startTime = System.nanoTime();
-                ms++;
-                if (ms == 100) 
-                {
-                    s++;
-                    ms = 0;
-                    if (s == 60) 
-                    {
-                        m++;
-                        s = 0;
-                        if (m == 60) 
-                        {
-                            h++;
-                            m = 0;
-                        }
-                    }
-                }
-                
-                time.setText(h+" : "+m+" : "+s+" : "+ms);
-                
-            }
-        }
-	}
-}*/
+
 	public void myFrame()
 	{
 		
 		//created frame and set dimension
 		frame=new JFrame("Stopwatch");
 		frame.setVisible(true);
-		frame.setSize(445, 160);
+		frame.setSize(500, 200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//created 3 panels and set backgrounds
 		panel1= new JPanel();
 		panel2= new JPanel();
 		panel3= new JPanel();
-		panel1.setBackground(Color.yellow);
-		panel3.setBackground(Color.green);
+		panel1.setBackground(Color.WHITE);
+		panel2.setBackground(Color.ORANGE);
+		panel3.setBackground(Color.BLACK);
 		
 		//positioned the panels in frame
 		frame.add(panel1,BorderLayout.NORTH);
@@ -221,7 +137,7 @@ public class Swing extends JPanel
 		
 		//adding to panel1
 		label = new JLabel("EECS 448 StopWatch");
-		panel1.add(label);
+		panel1.add(label,BorderLayout.SOUTH);
 		
 		//adding to panel2
 		panel2.add(time);
@@ -232,13 +148,14 @@ public class Swing extends JPanel
 		panel3.add(reset);
 	}	
 	
+	//Main function
 	public static void main(String[] args)
 	{
-		Swing myStopWatch;
-		myStopWatch = new Swing();
+		StopWatch myStopWatch;
+		myStopWatch = new StopWatch();
 		myStopWatch.myFrame();
 	}
 	
-}//class swing ends here
+}//class StopWatch ends here
 
 
