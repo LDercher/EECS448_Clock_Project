@@ -30,7 +30,7 @@ public class Swing extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	WatchPanel watch = new WatchPanel();
-	ConsoleMenu printMenu = new ConsoleMenu();
+	//ConsoleMenu printMenu = new ConsoleMenu();
 	JPanel pane = new JPanel();
 
 	/**
@@ -80,6 +80,7 @@ public class Swing extends JFrame {
  * @see http://workbench.cadenhead.org/book/21java/source/day13/DigitalClock.java
  *
  */
+/*
 class ConsoleMenu implements Runnable {
 	Thread runner;
 	int test = 0;
@@ -98,21 +99,21 @@ class ConsoleMenu implements Runnable {
 	 * @pre continuously called by thread
 	 * @post time set and format get updated
 	 * @return void
-	 */
+	 *//*
 	public void run() {
 		clock a = new clock(1, hhmmss_meridian_military.hh_,
 				hhmmss_meridian_military.mm_, hhmmss_meridian_military.ss_);
 		while (true) {
 
-			a.input();
+			//a.input();
 
 			hhmmss_meridian_military.hh_ = a.hh;
 			hhmmss_meridian_military.mm_ = a.mm;
 			hhmmss_meridian_military.ss_ = a.ss;
 
-			if (a.AM_or_PM.equals("PM"))
-				hhmmss_meridian_military.AM_or_PM_ = true;
-			else
+			//if (a.AM_or_PM.equals("PM"))
+				//hhmmss_meridian_military.AM_or_PM_ = true;
+			//else
 				hhmmss_meridian_military.AM_or_PM_ = false;
 
 			hhmmss_meridian_military.military_ = a.militaryTime;
@@ -122,7 +123,7 @@ class ConsoleMenu implements Runnable {
 			hhmmss_meridian_military.changetimeDifference = a.changetimeDifference;
 		}
 	}
-}
+}*/
 
 /**
  * The 'hhmmss_meridian_military' class is used to communicate between
@@ -130,7 +131,7 @@ class ConsoleMenu implements Runnable {
  * user to specify hh, mm, ss, AM or PM, or military time Those specified values
  * are set in this class by ContinuosMenu which are then pulled from by
  * WatchPanel. WatchPanel pulls the values then sets them into the clock.
- */
+ *//*
 
 class hhmmss_meridian_military {
 	public static int hh_ = 0;
@@ -140,7 +141,7 @@ class hhmmss_meridian_military {
 	public static boolean military_ = false;
 	public static boolean timeChanged = false;
 	public static boolean changetimeDifference = false;
-}
+}*/
 
 /**
  * The "WatchPanel" class implements 'thread runner' to set the time values into the clock
@@ -168,12 +169,13 @@ class WatchPanel extends JPanel implements Runnable {
 		
 		//LDercher created the buttons
 		
+		//HOURS
 				JButton hours_minus = new JButton("-");
 				hours_minus.addActionListener(new ActionListener() 
 				{ 
 				    public void actionPerformed(ActionEvent e) 
 				    { 
-				    	
+				    	swingClock.sethh(swingClock.gethh()-1);
 				    	
 				    } 
 				});
@@ -183,13 +185,14 @@ class WatchPanel extends JPanel implements Runnable {
 				{ 
 				    public void actionPerformed(ActionEvent e) 
 				    { 
-				    	
+				    	swingClock.sethh(swingClock.gethh()+1);
 				    } 
 				});
 				
 				hours_plus.setAlignmentX(150);
 				hours_plus.setAlignmentY(500);
 				
+			//MINUTES	
 				JButton minutes_plus = new JButton("+");
 				minutes_plus.addActionListener(new ActionListener() 
 				{ 
@@ -206,10 +209,13 @@ class WatchPanel extends JPanel implements Runnable {
 				{ 
 				    public void actionPerformed(ActionEvent e) 
 				    { 
+				    	swingClock.setmm(swingClock.getmm()-1);
 				       // add function to decrement m
 				    } 
 				});
 				
+				
+				//SECONDS
 				JButton seconds_plus = new JButton("+");
 				seconds_plus.addActionListener(new ActionListener() 
 				{ 
@@ -233,6 +239,7 @@ class WatchPanel extends JPanel implements Runnable {
 				{
 					public void actionPerformed(ActionEvent arg0) 
 					{
+						swingClock.switchClockMode(false);
 						//add function to switch to 12hr mode
 					}
 				});
@@ -242,6 +249,7 @@ class WatchPanel extends JPanel implements Runnable {
 				{	
 					public void actionPerformed(ActionEvent arg0) 
 					{
+						swingClock.switchClockMode(true);
 						//add function to switch to 24hr mode
 					}
 				});
@@ -251,6 +259,7 @@ class WatchPanel extends JPanel implements Runnable {
 				{	
 					public void actionPerformed(ActionEvent arg0) 
 					{
+						
 						//add function to switch to timer mode
 					}
 				});
@@ -408,6 +417,11 @@ class WatchPanel extends JPanel implements Runnable {
 			swingClock.setTime();
 			
 			String time = swingClock.getTime();
+			
+			if(!swingClock.militaryTime)
+			{
+				time = time + " " + swingClock.getAmPm().toString();
+			}
 			
 			g.setColor(Color.black);
 			

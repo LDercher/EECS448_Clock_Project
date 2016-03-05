@@ -28,16 +28,33 @@ public class clock {
 	 * Constructor method for main Clock class.
 	 * @throws InterruptedException, IOException
 	 */
+	
+	/**
+	 * hh is hours, mm is minutes, ss is seconds, AM_or_PM is AM or PM,
+	 * militaryTime switches 12-24 hour format
+	 */
+	int hh;
+	int mm;
+	int ss;
+	AM_PM AM_PM;
+	boolean militaryTime = false;
+	String Num_S = "";
+	String timeString;
+	boolean readyFlag = false;
+	int timeDifference;
+	boolean changetimeDifference = false;
 
+	public enum AM_PM {AM, PM}
+	
 	public clock() {
 		/**
 		 * Sets initial values for time, format, and timeDifference variables
 		 */
 
-		hh = 0;
+		hh = 12;
 		mm = 0;
 		ss = 0;
-		AM_or_PM = "AM";
+		AM_PM =AM_PM.AM ;
 		timeString = "";
 		timeDifference = 0;
 
@@ -51,30 +68,20 @@ public class clock {
 
 	}
 
-	public clock(int menu, int hh, int mm, int ss) {
+	public clock(int hh, int mm, int ss) {
 		// pass an integer to skip input() call; this is used to get menu output
+		
+		
 		this.hh = hh;
 		this.mm = mm;
 		this.ss = ss;
-		AM_or_PM = "AM";
-		timeString = "";
-		timeDifference = 0;
+		AM_PM = AM_PM.AM;
+	
+		
 	}
+	
+	
 
-	/**
-	 * hh is hours, mm is minutes, ss is seconds, AM_or_PM is AM or PM,
-	 * militaryTime switches 12-24 hour format
-	 */
-	int hh;
-	int mm;
-	int ss;
-	String AM_or_PM;
-	boolean militaryTime = false;
-	String Num_S = "";
-	String timeString;
-	boolean readyFlag = false;
-	int timeDifference;
-	boolean changetimeDifference = false;
 
 	/** @return timeString */
 	public String getTime() 
@@ -88,6 +95,7 @@ public class clock {
 	 * 
 	 * @return void
 	 * @post Time input is parsed and implemented
+	 * dead code?
 	 */
 	public void setTime() {
 		DateTimeFormatter dtf = DateTimeFormat
@@ -125,9 +133,17 @@ public class clock {
 		{
 			this.hh = lMinHour;
 		}
+		else if(hh < lMinHour)
+		{
+			this.hh = lMaxHour;
+		}
 		else
 		{
 			this.hh = hh;
+		}
+		if(this.gethh() == 12)
+		{
+			this.switchAmPm();
 		}
 	}
 
@@ -151,6 +167,11 @@ public class clock {
 		{
 			this.mm=0;
 			this.sethh(this.gethh()+1);
+		}
+		else if(mm<0)
+		{
+			this.mm = 59;
+			this.sethh(this.gethh()-1);
 		}
 		else
 		{
@@ -177,6 +198,11 @@ public class clock {
 			this.ss = 0;
 			this.setmm(this.getmm()+1);
 		}
+		else if(ss<0)
+		{
+			this.ss = 59;
+			this.setmm(this.getmm()-1);
+		}
 		else
 		{
 			this.ss = ss;
@@ -192,6 +218,62 @@ public class clock {
 		return ss;
 	}
 	
+	public void setAmPm(AM_PM aTimeOfDay)
+	{
+		this.AM_PM = aTimeOfDay;
+	}
+	public AM_PM getAmPm()
+	{
+		return(this.AM_PM);
+	}
+	
+	public void switchAmPm()
+	{
+		if(this.getAmPm()==AM_PM.AM)
+		{
+			this.setAmPm(AM_PM.PM);
+		}
+		else
+		{
+			this.setAmPm(AM_PM.AM);
+		}
+	}
+	/**
+	 * 
+	 * @param a24hours true if mode should be changed to 24 false if mode should be 12
+	 */
+	public void switchClockMode(boolean a24hours)
+	{
+		if(a24hours)
+		{
+			this.militaryTime = true;
+			if((this.getAmPm() == AM_PM.PM && this.gethh() != 12) || (this.getAmPm() == AM_PM.AM && this.gethh() == 12))
+			{
+				this.sethh(this.gethh()+12);
+				
+			}
+		}
+		else
+		{
+			this.militaryTime = false;
+			if(this.gethh()> 12)
+			{
+				this.sethh(this.gethh()-12);
+				this.setAmPm(AM_PM.PM);
+			}
+			else if(this.gethh() == 0)
+			{
+				this.sethh(12);
+				this.setAmPm(AM_PM.AM);
+			}
+			else
+			{
+				this.setAmPm(AM_PM.AM);
+			}
+		}
+	}
+	
+	
 	public void setReadyFlag(boolean aFlag)
 	{
 		this.readyFlag = aFlag;
@@ -200,15 +282,16 @@ public class clock {
 	/**
 	 * Convert hh to 24 hour equivalent; used to calculate the milliseconds of
 	 * the day
+	 * Dead code?
 	 */
-	public void settimeDifference() {
+	/*public void settimeDifference() {
 
 		
 		System.out.println("The clocks hours: "+this.hh);
 		/**
 		 * if PM, add 12 hours except if it's 12 PM else-if: if 12 AM, it's 0
 		 * hours from midnight
-		 */
+		 
 		if (AM_or_PM.equals("PM") && hh != 12) {
 			hh += 12;
 
@@ -219,7 +302,7 @@ public class clock {
 		// to calculate time difference between present time and input time
 		timeDifference = (hh * 3600 + mm * 60 + ss) * 1000
 				- DateTime.now().getMillisOfDay();
-	}
+	}*/
 
 	/**
 	 * @pre 
@@ -233,7 +316,9 @@ public class clock {
 	/**
 	 * @return void 
 	 * method created to design menu and receive input from user
+	 * dead code?
 	 */
+	/*
 	public void input() {
 		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
@@ -250,7 +335,7 @@ public class clock {
 			while (!Num_S.matches("\\d+$"))
 			/**
 			 * @see http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
-			 */
+			 *//*
 
 			{
 				System.out.print("Invalid number. Please try again: ");
@@ -274,7 +359,7 @@ public class clock {
 				changetimeDifference = false;
 			}
 		}
-		/** set hh */
+		/** set hh *//*
 
 		if (temp == 1 || temp == 2) {
 			hh = -1;
@@ -287,7 +372,7 @@ public class clock {
 					while (!Num_S.matches("\\d+$"))
 					/**
 					 * @see http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
-					 */
+					 *//*
 					{
 						System.out.print("Invalid number. Please try again: ");
 						Num_S = input.nextLine();
@@ -312,7 +397,7 @@ public class clock {
 					while (!Num_S.matches("\\d+$")) 
 					/**
 					 * @see http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
-					 */
+					 *//*
 					{
 						System.out.print("Invalid number. Please try again: ");
 						Num_S = input.nextLine();
@@ -324,14 +409,14 @@ public class clock {
 				}
 			}
 
-			/** set mm */
+			/** set mm *//*
 			System.out.print("Insert mm: ");
 			while (mm < 0 || mm > 59) {
 				Num_S = input.nextLine();
 				while (!Num_S.matches("\\d+$")) 
 				/**
 				* @see http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
-				*/
+				*//*
 				{
 					System.out.print("Invalid number. Please try again: ");
 					Num_S = input.nextLine();
@@ -341,14 +426,14 @@ public class clock {
 					System.out.print("MM must be between 0-59, try again:");
 				}
 			}
-			/** set ss */
+			/** set ss *//*
 			System.out.print("Insert ss: ");
 			while (ss < 0 || ss > 59) {
 				Num_S = input.nextLine();
 				while (!Num_S.matches("\\d+$")) 
 				/**
 				* @see http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
-				*/
+				*//*
 				{
 					System.out.print("Invalid number. Please try again: ");
 					Num_S = input.nextLine();
@@ -372,12 +457,12 @@ public class clock {
 			}
 			changetimeDifference = true;
 		}
-	}
+	}*/
 
 	/** 
 	* @return void
 	* @post AM or PM is set
-	*/
+	*//*
 	public void AMorPM() {
 		Scanner input = new Scanner(System.in);
 		System.out.print("Insert AM or PM:");
@@ -390,7 +475,7 @@ public class clock {
 		}
 		input.close();
 
-	}
+	}*/
 
 	/**
 	 * This is the important part of the class. This will print the Clock in
@@ -408,7 +493,7 @@ public class clock {
 	 */
 
 	private void initializeClock() throws InterruptedException, IOException {
-		settimeDifference();
+		//settimeDifference();
 		readyFlag = true;
 
 	}
