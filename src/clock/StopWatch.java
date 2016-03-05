@@ -1,4 +1,4 @@
-package src2;
+package clock;
 
 //AUTHOR: SRI GAYATRI
 
@@ -38,7 +38,7 @@ public class StopWatch extends JPanel
 	isRunning = false;
 	*/
 	
-	public Swing()
+	public StopWatch()
 	{
 		min=0;
 		sec=0;
@@ -233,12 +233,7 @@ public class StopWatch extends JPanel
 		panel3.add(reset);
 	}	
 	
-	public static void main(String[] args)
-	{
-		Swing myStopWatch;
-		myStopWatch = new Swing();
-		myStopWatch.myFrame();
-	}
+
 	
 }//class swing ends here
 
