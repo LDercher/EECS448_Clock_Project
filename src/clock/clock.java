@@ -36,7 +36,7 @@ public class clock {
 	int hh;
 	int mm;
 	int ss;
-	AM_PM AM_PM;
+	public enum_AM_PM AM_PM;
 	boolean militaryTime = false;
 	String Num_S = "";
 	String timeString;
@@ -44,7 +44,7 @@ public class clock {
 	int timeDifference;
 	boolean changetimeDifference = false;
 	public boolean mNextDayFlag = false;
-	public enum AM_PM {AM, PM}
+	public enum enum_AM_PM {AM, PM}
 	
 	public clock() {
 		/**
@@ -54,7 +54,7 @@ public class clock {
 		hh = 12;
 		mm = 0;
 		ss = 0;
-		AM_PM =AM_PM.AM ;
+		AM_PM =enum_AM_PM.AM ;
 		timeString = "";
 		timeDifference = 0;
 
@@ -75,7 +75,7 @@ public class clock {
 		this.hh = hh;
 		this.mm = mm;
 		this.ss = ss;
-		AM_PM = AM_PM.AM;
+		AM_PM = enum_AM_PM.AM;
 	
 		
 	}
@@ -148,7 +148,7 @@ public class clock {
 		if(this.gethh() == 12 && !this.militaryTime)
 		{
 			this.switchAmPm();
-			if(this.getAmPm() == AM_PM.AM)
+			if(this.getAmPm() == enum_AM_PM.AM)
 			{
 				this.mNextDayFlag = true;
 			}
@@ -226,24 +226,24 @@ public class clock {
 		return ss;
 	}
 	
-	public void setAmPm(AM_PM aTimeOfDay)
+	public void setAmPm(enum_AM_PM aTimeOfDay)
 	{
 		this.AM_PM = aTimeOfDay;
 	}
-	public AM_PM getAmPm()
+	public enum_AM_PM getAmPm()
 	{
 		return(this.AM_PM);
 	}
 	
 	public void switchAmPm()
 	{
-		if(this.getAmPm()==AM_PM.AM)
+		if(this.getAmPm()== enum_AM_PM.AM)
 		{
-			this.setAmPm(AM_PM.PM);
+			this.setAmPm(enum_AM_PM.PM);
 		}
 		else
 		{
-			this.setAmPm(AM_PM.AM);
+			this.setAmPm(enum_AM_PM.AM);
 		}
 	}
 	/**
@@ -255,7 +255,7 @@ public class clock {
 		if(a24hours)
 		{
 			this.militaryTime = true;
-			if((this.getAmPm() == AM_PM.PM && this.gethh() != 12) || (this.getAmPm() == AM_PM.AM && this.gethh() == 12))
+			if((this.getAmPm() == enum_AM_PM.PM && this.gethh() != 12) || (this.getAmPm() == enum_AM_PM.AM && this.gethh() == 12))
 			{
 				this.sethh(this.gethh()+12);
 				
@@ -267,16 +267,16 @@ public class clock {
 			if(this.gethh()> 12)
 			{
 				this.sethh(this.gethh()-12);
-				this.setAmPm(AM_PM.PM);
+				this.setAmPm(enum_AM_PM.PM);
 			}
 			else if(this.gethh() == 0)
 			{
 				this.sethh(12);
-				this.setAmPm(AM_PM.AM);
+				this.setAmPm(enum_AM_PM.AM);
 			}
 			else
 			{
-				this.setAmPm(AM_PM.AM);
+				this.setAmPm(enum_AM_PM.AM);
 			}
 		}
 	}
