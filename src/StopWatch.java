@@ -7,9 +7,7 @@
 
 //importing libraries
 import java.awt.event.*;
-
 import javax.swing.*;
-
 import java.awt.*;
 
 public class StopWatch extends JPanel
