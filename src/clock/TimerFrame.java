@@ -14,7 +14,7 @@ import java.text.NumberFormat;
 import javax.swing.*;
 
 import java.text.NumberFormat;
-/**
+class TimerFrame extends JFrame implements ActionListener
  *Implements JFrame components
  *
  *
@@ -187,7 +187,7 @@ JButton hour_up ;
     add(reset);
     
     add(m_timer);
-    setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );   
+    setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );   
   }
  
  
@@ -248,5 +248,4 @@ public void actionPerformed(ActionEvent e) {
   
  
 }
-
 
