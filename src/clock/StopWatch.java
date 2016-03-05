@@ -40,6 +40,7 @@ public class StopWatch extends JPanel
 	
 	public StopWatch()
 	{
+		
 		min=0;
 		sec=0;
 		ticks = 0;  		//initial clock setting in ticks
@@ -206,7 +207,7 @@ public class StopWatch extends JPanel
 		frame=new JFrame("Stopwatch");
 		frame.setVisible(true);
 		frame.setSize(445, 160);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		//created 3 panels and set backgrounds
 		panel1= new JPanel();
