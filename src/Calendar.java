@@ -1,4 +1,4 @@
-package test;
+
 
 public class Calendar
 {
@@ -6,12 +6,22 @@ public class Calendar
 	public enum DAY_OF_WEEK {Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday }
 	public enum MONTH{January,February,March,April,May,June,July,August,September,October,November,December}
 	
+	/**
+	 * 
+	 * @author Luke Weber
+	 * 
+	 */
 	private class cMonth
 	{
 		public MONTH mName;
 		public int mValue;
 		public int mTotalDays;
 		
+		/**
+		 * Constructor for month
+		 * @param aName the name of the month based on the MONTH enums i.e. March
+		 * @param aLeap if this is a leap year.
+		 */
 		private cMonth(MONTH aName, boolean aLeap)
 		{
 			this.mName = aName;
@@ -53,45 +63,99 @@ public class Calendar
 	private DAY_OF_WEEK mDayOfWeek;
 	private int mYear;
 	private cMonth mMonth;
-	private boolean mLeap;
 	
 	
-	public Calendar(int aDay, MONTH aMonth, int aYear, boolean aLeap)
+	
+	public Calendar(int aDay, MONTH aMonth, int aYear)
 	{
 		this.mDayOfMonth = aDay;
-		this.mMonth = new cMonth(aMonth, aLeap);
-		this.mLeap = aLeap;
-		this.mDayOfWeek = calcDayOfTheWeek(this.mMonth.mValue, aDay, aYear, aLeap);
+		this.mMonth = new cMonth(aMonth, this.getLeap());
+		this.mDayOfWeek = calcDayOfTheWeek(this.mMonth.mValue, aDay, aYear, this.getLeap());
 		this.mYear = aYear;
 	}
+	/**
+	 * 
+	 * @return the day of the month
+	 */
 	public int getDayOfMonth()
 	{
 		return(this.mDayOfMonth);
 	}
+	/**
+	 * 
+	 * @return the day of the week i.e. Monday
+	 */
 	public DAY_OF_WEEK getDayOfWeek()
 	{
 		return(mDayOfWeek);
 	}
+	/**
+	 * 
+	 * @return the name of the month i.e March
+	 */
 	public MONTH getMonth()
 	{
 		return(mMonth.mName);
 	}
+	
+	/**
+	 * 
+	 * @return the ordinality of the month. e.g. December would return 12
+	 */
 	public int getMonthValue()
 	{
 		return(this.mMonth.mValue);
 	}
+	
+	/**
+	 * 
+	 * @param aMonth: the month to check what is its ordinality.
+	 * @return the ordinality of the month. e.g. December would return 12
+	 */
 	public int getMonthValue(MONTH aMonth)
 	{
 		return(aMonth.ordinal()+1);
 	}
+	
+	/**
+	 * 
+	 * @return the year.
+	 */
 	public int getYear()
 	{
 		return(this.mYear);
 	}
+	
+	/**
+	 * //based on https://en.wikipedia.org/wiki/Leap_year
+	 * @return True if it is a leap year.
+	 */
 	public boolean getLeap()
 	{
-		return(this.mLeap);
+		
+		boolean lReturn = false;
+		if (this.getYear()%4!=0)
+		{
+			lReturn = false;
+		}
+		else if (this.getYear()%100!=0)
+		{
+			lReturn = true;
+		}
+		else if (this.getYear()%400!=0)
+		{
+			lReturn = false;
+		}
+		else 
+		{
+			lReturn = true;
+		}
+		return(lReturn);
 	}
+	
+	/**
+	 * Increases the day of the month calculating whether it is a new month.
+	 */
 	public void incrementDay()
 	{
 		this.mDayOfMonth++;
@@ -101,9 +165,12 @@ public class Calendar
 			this.incrementMonth();
 		
 		}
-		this.mDayOfWeek = this.calcDayOfTheWeek(this.mMonth.mValue, this.mDayOfMonth, this.mYear, this.mLeap);
+		this.mDayOfWeek = this.calcDayOfTheWeek(this.mMonth.mValue, this.mDayOfMonth, this.mYear, this.getLeap());
 	}
 	
+	/**
+	 * Increase the month calculating whether it should be a new month.
+	 */
 	private void incrementMonth()
 	{
 		boolean lFlag = false;//flag to indicate it is the next month
@@ -127,6 +194,14 @@ public class Calendar
 			}
 		}
 	}
+	/**
+	 * based on https://en.wikipedia.org/wiki/Determination_of_the_day_of_the_week
+	 * @param aMonth: The ordinality of the month.
+	 * @param aDay: The Day of the month
+	 * @param aYear: The Year
+	 * @param aLeap: If the year is a leap
+	 * @return the day of the week
+	 */
 	    private DAY_OF_WEEK calcDayOfTheWeek(int aMonth, int aDay, int aYear, boolean aLeap)
 	    {
 	    	
