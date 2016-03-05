@@ -132,7 +132,7 @@ public class Calendar
 	 * @param aMonth: the month to check what is its ordinality.
 	 * @return the ordinality of the month. e.g. December would return 12
 	 */
-	public int getMonthValue(MONTH aMonth)
+	public static int getMonthValue(MONTH aMonth)
 	{
 		return(aMonth.ordinal()+1);
 	}

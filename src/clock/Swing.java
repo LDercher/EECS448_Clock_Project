@@ -46,7 +46,7 @@ public class Swing extends JFrame {
 		
 		super("EECS448 - Clock Project");
 		
-		setSize(562, 454);
+		setSize(878, 417);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -426,6 +426,16 @@ class WatchPanel extends JPanel implements Runnable {
 			
 			String time = swingClock.getTime();
 			
+			int day = lCalendar.getDayOfMonth();
+			
+			int month = lCalendar.getMonthValue();
+			
+			int year = lCalendar.getYear();
+			
+			String date = day + "/" + month + "/" + year;
+	
+			
+			
 			if(!swingClock.militaryTime)
 			{
 				time = time + " " + swingClock.getAmPm().toString();
@@ -440,7 +450,7 @@ class WatchPanel extends JPanel implements Runnable {
 			
 			g.drawString(time, 100, 100);	
 
-			
+			g.drawString(date, 500, 100);
 
 		}
 
