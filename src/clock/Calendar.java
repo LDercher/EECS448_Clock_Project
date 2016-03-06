@@ -83,6 +83,11 @@ public class Calendar
 		return(this.mDayOfMonth);
 	}
 	
+	public int getTotalDays()
+	{
+		return(this.mMonth.mTotalDays);
+	}
+	
 	/**
 	 * 
 	 * @param aDay an int to set the day.
@@ -97,6 +102,7 @@ public class Calendar
 	 */
 	public DAY_OF_WEEK getDayOfWeek()
 	{
+		this.mDayOfWeek = this.calcDayOfTheWeek(this.mMonth.mValue, this.mDayOfMonth, this.mYear, this.getLeap());
 		return(mDayOfWeek);
 	}
 	/**
@@ -200,7 +206,7 @@ public class Calendar
 	/**
 	 * Increase the month calculating whether it should be a new month.
 	 */
-	private void incrementMonth()
+	public void incrementMonth()
 	{
 		boolean lFlag = false;//flag to indicate it is the next month
 		for(MONTH iMonth: MONTH.values())
@@ -384,7 +390,7 @@ public class Calendar
     		}
     		else if ((DayOfWeek >=6) && (DayOfWeek <7))
     		{
-    			lDay = DAY_OF_WEEK.Friday; 
+    			lDay = DAY_OF_WEEK.Saturday; 
     		}
     		else
     		{

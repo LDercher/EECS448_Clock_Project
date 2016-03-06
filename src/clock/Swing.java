@@ -517,6 +517,11 @@ class WatchPanel extends JPanel implements Runnable {
 				lCalendar.incrementDay();
 				swingClock.mNextDayFlag = false;
 			}
+			else if(swingClock.mLastDayFlag)
+			{
+				lCalendar.decrementDay();
+				swingClock.mLastDayFlag = false;
+			}
 			g.setColor(Color.black);
 			
 			g.drawString(time, 100, 100);

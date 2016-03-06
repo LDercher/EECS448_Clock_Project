@@ -124,6 +124,11 @@ public class clock {
 	public void sethh(int hh)
 	{
 		boolean lIncrement = true;
+		if(hh<this.gethh())
+		{
+			lIncrement = false;
+		}
+		
 		int lMaxHour = 12;
 		int lMinHour = 1;
 		if(this.militaryTime)
@@ -157,8 +162,9 @@ public class clock {
 				this.mNextDayFlag = true;
 			}
 		}
-		if(this.gethh() == 11 && !this.militaryTime)
+		else if(this.gethh() == 11 && !this.militaryTime && lIncrement == false)
 		{
+			this.switchAmPm();
 			if(this.getAmPm() == enum_AM_PM.PM)
 			{
 				this.mLastDayFlag = true;
