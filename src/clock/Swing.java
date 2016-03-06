@@ -243,10 +243,9 @@ class WatchPanel extends JPanel implements Runnable {
 				{
 					public void actionPerformed(ActionEvent arg0) 
 					{
-						if (lCalendar.getMonthValue() < 13 )
-						{
+					
 						lCalendar.incrementMonth();
-						}
+						
 					}
 				});
 				
@@ -255,25 +254,9 @@ class WatchPanel extends JPanel implements Runnable {
 				{
 					public void actionPerformed(ActionEvent arg0) 
 					{
-						//add function to decrement seconds
-						if (lCalendar.getMonthValue() > 0 )
-						{
-							MONTH prevMonth = December;
-								
-							for(MONTH iMonth: MONTH.values())
-							{
-								
-								if(lCalendar.getMonth() == iMonth)
-								{
-									prevMonth = iMonth;
-									
-									lCalendar.setMonth(prevMonth);
-								}
-							}
-							
-						}
-						
+						lCalendar.decrementMonth();
 					}
+						
 				});
 				
 				//DAYS INC/DEC
@@ -283,10 +266,7 @@ class WatchPanel extends JPanel implements Runnable {
 					public void actionPerformed(ActionEvent arg0) 
 					{
 						//add function to increment days
-						if (lCalendar.getDayOfMonth() < lCalendar.getTotalDays())
-						{
-						lCalendar.setDayOfMonth(lCalendar.getDayOfMonth()+1);
-						}
+						lCalendar.incrementDay();
 					}
 				});
 				
@@ -296,10 +276,7 @@ class WatchPanel extends JPanel implements Runnable {
 					public void actionPerformed(ActionEvent arg0) 
 					{
 						//add function to decrement days
-						if (lCalendar.getDayOfMonth() > 1)
-						{
-						lCalendar.setDayOfMonth(lCalendar.getDayOfMonth()-1);
-						}
+						lCalendar.decrementDay();
 						
 					}
 				});
@@ -504,7 +481,7 @@ class WatchPanel extends JPanel implements Runnable {
 			
 			int year = lCalendar.getYear();
 			
-			String date = month + "/" + day + "/" + year;
+			String date = String.format("%02d/%02d/%04d", month, day, year);
 	
 			
 			if(!swingClock.militaryTime)
