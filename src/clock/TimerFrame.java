@@ -17,7 +17,9 @@ import java.text.NumberFormat;
 
 class TimerFrame extends JFrame implements ActionListener
 {Timer timer;
+
 AudioClip sound; 
+
 //Reference to Buttons
 JButton hour_up ;
   JButton min_up;
@@ -28,6 +30,8 @@ JButton hour_up ;
   JButton reset;
   JButton pause;
   JButton set_time;
+  JButton zoomin;
+  JButton zoomout;
  //Reference to label objects
   JLabel m_hour;
   JLabel m_min;
@@ -40,7 +44,7 @@ JButton hour_up ;
   NumberFormat format;
   long remain;
   long lastUpdate;
-
+  int m_zoom=20;
 
   TimerFrame(String title) 
   {
@@ -64,9 +68,12 @@ JButton hour_up ;
     sec_down=new JButton("-");
     pause=new JButton("Pause");
     reset=new JButton("Reset");
-    
+    zoomin=new JButton("Zoom In");
+    zoomout=new JButton("Zoom Out");
+	
  //Action Listeners   
     m_timer= new JLabel("00:00:00");
+    m_timer.setFont(new Font("Serif", Font.BOLD, m_zoom));
     timer = new Timer(1000, new ActionListener(){
     	public void actionPerformed(ActionEvent evt){
     		updateclock();
@@ -91,7 +98,24 @@ JButton hour_up ;
     	  
     	}
     }); 
-  
+    zoomin.addActionListener( new ActionListener(){
+    	public void actionPerformed(ActionEvent evt){
+    		m_zoom=m_zoom+10;
+    		m_timer.setFont(new Font("Serif", Font.BOLD, m_zoom));
+    		
+    	      repaint();  // ask the system to paint the screen.
+    	  
+    	}
+    }); 
+    zoomout.addActionListener( new ActionListener(){
+    	public void actionPerformed(ActionEvent evt){
+    		m_zoom=m_zoom-10;
+    		m_timer.setFont(new Font("Serif", Font.BOLD, m_zoom));
+    		
+    	      repaint();  // ask the system to paint the screen.
+    	  
+    	}
+    }); 
     
     
     
@@ -182,7 +206,9 @@ JButton hour_up ;
     add(pause);
     add(reset);
     
+    add(zoomin);
     add(m_timer);
+    add(zoomout);
     setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );   
   }
  
@@ -230,7 +256,7 @@ void updateclock(){
 // source:http://stackoverflow.com/questions/26305/how-can-i-play-sound-in-java
     if (remain == 0) {
     	getContentPane().setBackground(Color.RED);
-    	m_timer.setFont(new Font("Serif", Font.BOLD, 20));
+
     	m_timer.setText("Timer Done!");
       timer.stop();
       }
@@ -243,6 +269,5 @@ public void actionPerformed(ActionEvent e) {
 	
 }
 }  
- 
 
 
