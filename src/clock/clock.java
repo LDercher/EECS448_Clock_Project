@@ -44,6 +44,7 @@ public class clock {
 	int timeDifference;
 	boolean changetimeDifference = false;
 	public boolean mNextDayFlag = false;
+	public boolean mLastDayFlag = false;
 	public enum enum_AM_PM {AM, PM}
 	
 	public clock() {
@@ -122,6 +123,7 @@ public class clock {
 	 */
 	public void sethh(int hh)
 	{
+		boolean lIncrement = true;
 		int lMaxHour = 12;
 		int lMinHour = 1;
 		if(this.militaryTime)
@@ -140,6 +142,7 @@ public class clock {
 		else if(hh < lMinHour)
 		{
 			this.hh = lMaxHour;
+			lIncrement = false;
 		}
 		else
 		{
@@ -147,10 +150,18 @@ public class clock {
 		}
 		if(this.gethh() == 12 && !this.militaryTime)
 		{
+			
 			this.switchAmPm();
 			if(this.getAmPm() == enum_AM_PM.AM)
 			{
 				this.mNextDayFlag = true;
+			}
+		}
+		if(this.gethh() == 11 && !this.militaryTime)
+		{
+			if(this.getAmPm() == enum_AM_PM.PM)
+			{
+				this.mLastDayFlag = true;
 			}
 		}
 	}

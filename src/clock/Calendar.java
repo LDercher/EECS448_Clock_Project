@@ -223,6 +223,42 @@ public class Calendar
 			}
 		}
 	}
+	
+	public void decrementDay()
+	{
+		this.mDayOfMonth--;
+		if(this.mDayOfMonth < 1)
+		{
+			this.decrementMonth();
+			this.mDayOfMonth = this.mMonth.mTotalDays;
+		}
+	}
+	
+	public void decrementMonth()
+	{
+		MONTH previousMonth = MONTH.December;//flag to indicate it is the next month
+		for(MONTH iMonth: MONTH.values())
+		{
+			
+			if(iMonth == this.mMonth.mName)
+			{
+				
+				if(iMonth == MONTH.January)
+				{
+					this.mYear--;
+					this.mMonth = new cMonth(MONTH.December, this.getLeap());
+					break;
+				}
+				else
+				{
+					this.mMonth = new cMonth(iMonth, this.getLeap());
+					break;
+				}
+				
+			}	
+			previousMonth = iMonth;
+		}
+	}
 	/**
 	 * based on https://en.wikipedia.org/wiki/Determination_of_the_day_of_the_week
 	 * @param aMonth: The ordinality of the month.
