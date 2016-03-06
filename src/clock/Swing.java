@@ -8,17 +8,17 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
-import java.awt.image.DataBufferInt;
-import java.awt.image.WritableRaster;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import java.awt.event.InputEvent;  
+import java.awt.image.BufferedImage;  
+import java.awt.image.DataBuffer;  
+import java.awt.image.DataBufferInt;  
+import java.awt.image.WritableRaster;  
+import javax.swing.ImageIcon;  
+import javax.swing.JButton;  
+import javax.swing.JFrame;  
+import javax.swing.JLabel;  
 import javax.swing.JOptionPane;
+
 
 /**
  * 
@@ -57,7 +57,7 @@ public class Swing extends JFrame {
 		
 		super("EECS448 - Clock Project");
 		
-		setSize(997, 416);
+		setSize(1494, 473);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -166,11 +166,13 @@ class WatchPanel extends JPanel implements Runnable {
 	protected static final MONTH December = null;
 	Thread runner;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	
+	Font myFont = new Font("Georgia", Font.BOLD, 45);	
+	int flag=2;
 	Calendar lCalendar = new Calendar(1, MONTH.January, 2016);
 	clock swingClock = new clock(); // initializes swingClock object of type
 	// 'clock' used in the 'paintComponent'
 	// method
+	
 
 	
 	WatchPanel()
@@ -313,9 +315,10 @@ class WatchPanel extends JPanel implements Runnable {
 					}
 				});
 				
-				ImageIcon timerButton = new ImageIcon(getClass().getResource("../images-button/timer_thumbnail.jpg"));
-				JButton btnTimer = new JButton(timerButton);
-				//JButton btnTimer = new JButton("timer");
+				ImageIcon timerButton = new ImageIcon(getClass().getResource("../images-button/timer_thumbnail.jpg"));  
+				JButton btnTimer = new JButton(timerButton);  
+				//JButton btnTimer = new JButton("timer");  
+
 				btnTimer.addActionListener(new ActionListener() 
 				{	
 					public void actionPerformed(ActionEvent arg0) 
@@ -327,9 +330,10 @@ class WatchPanel extends JPanel implements Runnable {
 					}
 				});
 				
-				ImageIcon stopWatchButton = new ImageIcon(getClass().getResource("../images-button/stop-watch_thumbnail.png"));
-				JButton btnStopwatch = new JButton(stopWatchButton);
-				//JButton btnStopwatch = new JButton("stopwatch");
+				ImageIcon stopWatchButton = new ImageIcon(getClass().getResource("../images-button/stop-watch_thumbnail.png"));  
+				JButton btnStopwatch = new JButton(stopWatchButton);  
+				//JButton btnStopwatch = new JButton("stopwatch");  
+
 				btnStopwatch.addActionListener(new ActionListener() 
 				{	
 					public void actionPerformed(ActionEvent arg0) 
@@ -340,6 +344,38 @@ class WatchPanel extends JPanel implements Runnable {
 						//add function to switch to stopwatch mode
 					}
 				});
+				JButton zoomin=new JButton("ZOOM IN");
+				zoomin.addActionListener(new ActionListener() 
+				{	
+					public void actionPerformed(ActionEvent arg0) 
+					{
+						if(flag==1){
+							myFont = new Font("Georgia", Font.BOLD, 45);
+							flag=2;
+						}
+						else if(flag==2){
+							myFont = new Font("Georgia", Font.BOLD, 60);
+							flag=3;}
+						
+						
+					}
+				});
+				JButton zoomout=new JButton("ZOOM OUT");
+				zoomout.addActionListener(new ActionListener() 
+				{	
+					public void actionPerformed(ActionEvent arg0) 
+					{
+						if(flag==3){
+							myFont = new Font("Georgia", Font.BOLD, 45);
+							flag=2;
+						}
+						else{
+							myFont = new Font("Georgia", Font.BOLD, 30);	
+							flag=1;}
+						
+					}
+				});
+				
 				
 			
 				
@@ -371,11 +407,14 @@ class WatchPanel extends JPanel implements Runnable {
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 										.addComponent(twelveHR)
 										.addComponent(btnTimer))
-									.addGap(350)
+									.addGap(310)
+									.addComponent(zoomin)
+									.addGap(34)
+									.addComponent(zoomout)
 								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 											.addComponent(months_plus)
 											.addComponent(months_minus))
-										.addGap(2)	
+										.addGap(20)	
 								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 										.addComponent(days_plus)
 										.addComponent(days_minus))	
@@ -407,7 +446,9 @@ class WatchPanel extends JPanel implements Runnable {
 							.addGap(45)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnTimer)
-								.addComponent(btnStopwatch))
+								.addComponent(btnStopwatch)
+								.addComponent(zoomin)
+								.addComponent(zoomout))				
 							.addPreferredGap(ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE))
 							.addGap(34))
@@ -473,7 +514,7 @@ class WatchPanel extends JPanel implements Runnable {
 			hhmmss_meridian_military.timeChanged = false;
 		}
 		*/
-		Font myFont = new Font("Georgia", Font.BOLD, 46);
+		
 		
 		g.setFont(myFont);
 		
@@ -515,12 +556,14 @@ class WatchPanel extends JPanel implements Runnable {
 				swingClock.mLastDayFlag = false;
 			}
 			g.setColor(Color.black);
-			
+			//paints the time string
 			g.drawString(time, 100, 100);
+			//paints day of week
+			g.drawString(dayOfWeek, 600, 100);
+			//paints date in frame
+			g.drawString(date, 900, 100);
 			
-			g.drawString(dayOfWeek, 450, 100);
-
-			g.drawString(date, 730, 100);
+		
 
 		}
 
