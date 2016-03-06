@@ -257,7 +257,7 @@ public class Calendar
 				}
 				else
 				{
-					this.mMonth = new cMonth(iMonth, this.getLeap());
+					this.mMonth = new cMonth(previousMonth, this.getLeap());
 					break;
 				}
 				
