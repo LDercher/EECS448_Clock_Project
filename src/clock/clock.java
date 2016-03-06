@@ -294,8 +294,11 @@ public class clock {
 			else
 			{
 				this.setAmPm(enum_AM_PM.AM);
-			}
+			}			
 		}
+		
+		//this incrementing the day when switching from 12 to 24 hr time
+		this.mNextDayFlag = false;
 	}
 	
 	
