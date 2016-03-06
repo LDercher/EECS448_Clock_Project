@@ -8,6 +8,17 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBuffer;
+import java.awt.image.DataBufferInt;
+import java.awt.image.WritableRaster;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  * 
@@ -302,7 +313,9 @@ class WatchPanel extends JPanel implements Runnable {
 					}
 				});
 				
-				JButton btnTimer = new JButton("timer");
+				ImageIcon timerButton = new ImageIcon(getClass().getResource("../images-button/timer_thumbnail.jpg"));
+				JButton btnTimer = new JButton(timerButton);
+				//JButton btnTimer = new JButton("timer");
 				btnTimer.addActionListener(new ActionListener() 
 				{	
 					public void actionPerformed(ActionEvent arg0) 
@@ -314,7 +327,9 @@ class WatchPanel extends JPanel implements Runnable {
 					}
 				});
 				
-				JButton btnStopwatch = new JButton("stopwatch");
+				ImageIcon stopWatchButton = new ImageIcon(getClass().getResource("../images-button/stop-watch_thumbnail.png"));
+				JButton btnStopwatch = new JButton(stopWatchButton);
+				//JButton btnStopwatch = new JButton("stopwatch");
 				btnStopwatch.addActionListener(new ActionListener() 
 				{	
 					public void actionPerformed(ActionEvent arg0) 
