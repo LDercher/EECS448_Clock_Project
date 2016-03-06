@@ -46,7 +46,7 @@ public class Swing extends JFrame {
 		
 		super("EECS448 - Clock Project");
 		
-		setSize(878, 417);
+		setSize(997, 416);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -152,6 +152,7 @@ class hhmmss_meridian_military {
 class WatchPanel extends JPanel implements Runnable {
 
 	private static final long serialVersionUID = 1L;
+	protected static final MONTH December = null;
 	Thread runner;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
@@ -170,7 +171,7 @@ class WatchPanel extends JPanel implements Runnable {
 		
 		//LDercher created the buttons
 		
-		//HOURS
+		//HOURS INC/DEC
 				JButton hours_minus = new JButton("-");
 				hours_minus.addActionListener(new ActionListener() 
 				{ 
@@ -193,7 +194,7 @@ class WatchPanel extends JPanel implements Runnable {
 				hours_plus.setAlignmentX(150);
 				hours_plus.setAlignmentY(500);
 				
-			//MINUTES	
+			//MINUTES INC/DEC
 				JButton minutes_plus = new JButton("+");
 				minutes_plus.addActionListener(new ActionListener() 
 				{ 
@@ -216,7 +217,7 @@ class WatchPanel extends JPanel implements Runnable {
 				});
 				
 				
-				//SECONDS
+				//SECONDS INC/DEC
 				JButton seconds_plus = new JButton("+");
 				seconds_plus.addActionListener(new ActionListener() 
 				{ 
@@ -236,6 +237,73 @@ class WatchPanel extends JPanel implements Runnable {
 						swingClock.setss(swingClock.getss()-1);
 					}
 				});
+				//MONTHS INC/DEC
+				JButton months_plus = new JButton("+");
+				months_plus.addActionListener(new ActionListener() 
+				{
+					public void actionPerformed(ActionEvent arg0) 
+					{
+						if (lCalendar.getMonthValue() < 13 )
+						{
+						lCalendar.incrementMonth();
+						}
+					}
+				});
+				
+				JButton months_minus = new JButton("-");
+				months_minus.addActionListener(new ActionListener() 
+				{
+					public void actionPerformed(ActionEvent arg0) 
+					{
+						//add function to decrement seconds
+						if (lCalendar.getMonthValue() > 0 )
+						{
+							MONTH prevMonth = December;
+								
+							for(MONTH iMonth: MONTH.values())
+							{
+								
+								if(lCalendar.getMonth() == iMonth)
+								{
+									prevMonth = iMonth;
+									
+									lCalendar.setMonth(prevMonth);
+								}
+							}
+							
+						}
+						
+					}
+				});
+				
+				//DAYS INC/DEC
+				JButton days_plus = new JButton("+");
+				days_plus.addActionListener(new ActionListener() 
+				{
+					public void actionPerformed(ActionEvent arg0) 
+					{
+						//add function to increment days
+						if (lCalendar.getDayOfMonth() < lCalendar.getTotalDays())
+						{
+						lCalendar.setDayOfMonth(lCalendar.getDayOfMonth()+1);
+						}
+					}
+				});
+				
+				JButton days_minus = new JButton("-");
+				days_minus.addActionListener(new ActionListener() 
+				{
+					public void actionPerformed(ActionEvent arg0) 
+					{
+						//add function to decrement days
+						if (lCalendar.getDayOfMonth() > 1)
+						{
+						lCalendar.setDayOfMonth(lCalendar.getDayOfMonth()-1);
+						}
+						
+					}
+				});
+				
 				
 				JButton twelveHR = new JButton("12 hr");
 				twelveHR.addActionListener(new ActionListener() 
@@ -281,15 +349,6 @@ class WatchPanel extends JPanel implements Runnable {
 					}
 				});
 				
-				JButton btnStartpause = new JButton("start/pause");
-				btnStartpause.addActionListener(new ActionListener() 
-				{
-					public void actionPerformed(ActionEvent e) 
-					{
-					  //add function to start/stop stopwatch
-					}
-				});
-				buttonGroup.add(btnStartpause);
 			
 				
 				JButton btnReset = new JButton("reset");
@@ -311,16 +370,25 @@ class WatchPanel extends JPanel implements Runnable {
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addComponent(seconds_minus)
 										.addComponent(seconds_plus)))
+								.addGap(100)
 								.addGroup(groupLayout.createSequentialGroup()
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+												.addComponent(btnStopwatch)
+												.addComponent(twentyFourHR))
+								.addGap(100)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 										.addComponent(twelveHR)
-										.addComponent(btnTimer)
-										.addComponent(btnStartpause))
+										.addComponent(btnTimer))
+									.addGap(350)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+											.addComponent(months_plus)
+											.addComponent(months_minus))
+										.addGap(2)	
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(days_plus)
+										.addComponent(days_minus))	
 									.addGap(66)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnReset)
-										.addComponent(btnStopwatch)
-										.addComponent(twentyFourHR))))
+									))
 							.addGap(145))
 				);
 				groupLayout.setVerticalGroup(
@@ -330,12 +398,16 @@ class WatchPanel extends JPanel implements Runnable {
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(seconds_plus)
 								.addComponent(minutes_plus)
-								.addComponent(hours_plus))
+								.addComponent(hours_plus)
+								.addComponent(months_plus)
+								.addComponent(days_plus))
 							.addGap(57)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(seconds_minus)
 								.addComponent(minutes_minus)
-								.addComponent(hours_minus))
+								.addComponent(hours_minus)
+								.addComponent(days_minus)
+								.addComponent(months_minus))
 							.addGap(43)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(twelveHR)
@@ -345,9 +417,7 @@ class WatchPanel extends JPanel implements Runnable {
 								.addComponent(btnTimer)
 								.addComponent(btnStopwatch))
 							.addPreferredGap(ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnStartpause)
-								.addComponent(btnReset))
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE))
 							.addGap(34))
 				);
 				this.setLayout(groupLayout);
@@ -428,13 +498,14 @@ class WatchPanel extends JPanel implements Runnable {
 			
 			int day = lCalendar.getDayOfMonth();
 			
+			String dayOfWeek = lCalendar.getDayOfWeek().toString();
+			
 			int month = lCalendar.getMonthValue();
 			
 			int year = lCalendar.getYear();
 			
-			String date = day + "/" + month + "/" + year;
+			String date = month + "/" + day + "/" + year;
 	
-			
 			
 			if(!swingClock.militaryTime)
 			{
@@ -446,16 +517,13 @@ class WatchPanel extends JPanel implements Runnable {
 				lCalendar.incrementDay();
 				swingClock.mNextDayFlag = false;
 			}
-			else if(swingClock.mLastDayFlag)
-			{
-				lCalendar.decrementDay();
-				swingClock.mLastDayFlag = false;
-			}
 			g.setColor(Color.black);
 			
-			g.drawString(time, 100, 100);	
+			g.drawString(time, 100, 100);
+			
+			g.drawString(dayOfWeek, 450, 100);
 
-			g.drawString(date, 500, 100);
+			g.drawString(date, 730, 100);
 
 		}
 
