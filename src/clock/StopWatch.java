@@ -45,7 +45,6 @@ public class StopWatch extends JPanel
 		//setting the label
 		time = new JLabel();
 		time.setFont(myfont);
-		time.setText(time_string);
 		
 		//action listener
 		stopwatch = new Timer(100, new ActionListener() 
